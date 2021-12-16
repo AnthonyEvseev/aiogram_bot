@@ -4,6 +4,7 @@ from aiogram.dispatcher import Dispatcher
 from aiogram.types.message import ContentTypes
 from aiogram.utils import executor
 from data import config
+from loader import dp
 
 bot = Bot(token=config.BOT_TOKEN, parse_mode=types.ParseMode.HTML)
 PAYMENTS_PROVIDER_TOKEN = config.PAYMENTS_PROVIDER_TOKEN
@@ -11,7 +12,7 @@ PAYMENTS_PROVIDER_TOKEN = config.PAYMENTS_PROVIDER_TOKEN
 # PAYMENTS_PROVIDER_TOKEN = '123456789:TEST:1422'
 
 # bot = Bot(BOT_TOKEN)
-dp = Dispatcher(bot)
+# dp = Dispatcher(bot)
 
 # Setup prices
 prices = [
