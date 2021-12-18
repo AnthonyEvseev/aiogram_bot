@@ -46,7 +46,7 @@ shipping_options = [
 #                            '3. If you would like a refund, kindly apply for one yesterday and we will have sent it'
 #                            ' to you immediately.')
 
-@dp.message_handler(commands=['buy'])
+@dp.message_handler(commands=[' buy'])
 async def cmd_buy(message: types.Message):
     await bot.send_message(message.chat.id,
                            "Real cards won't work with me, no money will be debited from your account."
@@ -92,5 +92,5 @@ async def got_payment(message: types.Message):
                            parse_mode='Markdown')
 
 
-if __name__ == '__main__':
-    executor.start_polling(dp, skip_updates=True)
+# if __name__ == '__main__':
+#     executor.start_polling(dp, skip_updates=True)
