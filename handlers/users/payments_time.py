@@ -8,11 +8,6 @@ from loader import dp
 
 bot = Bot(token=config.BOT_TOKEN, parse_mode=types.ParseMode.HTML)
 PAYMENTS_PROVIDER_TOKEN = config.PAYMENTS_PROVIDER_TOKEN
-# BOT_TOKEN = 'BOT_TOKEN_HERE'
-# PAYMENTS_PROVIDER_TOKEN = '123456789:TEST:1422'
-
-# bot = Bot(BOT_TOKEN)
-# dp = Dispatcher(bot)
 
 # Setup prices
 prices = [
@@ -46,7 +41,7 @@ shipping_options = [
 #                            '3. If you would like a refund, kindly apply for one yesterday and we will have sent it'
 #                            ' to you immediately.')
 
-@dp.message_handler(commands=[' buy'])
+@dp.message_handler(commands=['buy'])
 async def cmd_buy(message: types.Message):
     await bot.send_message(message.chat.id,
                            "Real cards won't work with me, no money will be debited from your account."
