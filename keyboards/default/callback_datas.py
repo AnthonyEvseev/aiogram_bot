@@ -1,4 +1,4 @@
 from aiogram.utils.callback_data import CallbackData
 
-buy_apple = CallbackData('buy', 'item_name', 'quantity')
-subscribe_callback = CallbackData('subscribe', 'quantity')
+buy_callback = CallbackData('buy', 'item_name', 'quantity')
+other_callback = CallbackData('other', 'subscribe', 'quantity')
