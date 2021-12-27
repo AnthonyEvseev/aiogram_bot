@@ -42,7 +42,7 @@ shipping_options = [
 #                            ' to you immediately.')
 
 @dp.message_handler(commands=['buy'])
-async def cmd_buy(message: types.Message):
+async def buy_apple(message: types.Message):
     await message.reply("Первая инлайн кнопка", reply_markup=keyboards.button_buy)
     await bot.send_message(message.chat.id,
                            "Real cards won't work with me, no money will be debited from your account."
