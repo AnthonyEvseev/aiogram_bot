@@ -1,10 +1,10 @@
 from aiogram import Bot
 from aiogram import types
-from aiogram.dispatcher import Dispatcher
 from aiogram.types.message import ContentTypes
 from aiogram.utils import executor
 from data import config
 from loader import dp
+from keyboards.default import  keyboards
 
 bot = Bot(token=config.BOT_TOKEN, parse_mode=types.ParseMode.HTML)
 PAYMENTS_PROVIDER_TOKEN = config.PAYMENTS_PROVIDER_TOKEN
@@ -43,6 +43,7 @@ shipping_options = [
 
 @dp.message_handler(commands=['buy'])
 async def cmd_buy(message: types.Message):
+    await message.reply("Первая инлайн кнопка", reply_markup=keyboards.button_buy)
     await bot.send_message(message.chat.id,
                            "Real cards won't work with me, no money will be debited from your account."
                            " Use this test card number to pay for your Time Machine: `4242 4242 4242 4242`"
