@@ -41,7 +41,8 @@ shipping_options = [
 #                            '3. If you would like a refund, kindly apply for one yesterday and we will have sent it'
 #                            ' to you immediately.')
 
-@dp.message_handler(commands=['buy'])
+@dp.message_handler(text="🛒 Buy")
+
 async def buy_apple(message: types.Message):
     await message.reply("Первая инлайн кнопка", reply_markup=keyboards.button_buy)
     await bot.send_message(message.chat.id,
