@@ -42,12 +42,16 @@ shipping_options = [
 #                            ' to you immediately.')
 
 @dp.message_handler(text="🛒 Buy")
-
 async def buy_apple(message: types.Message):
-    await message.reply("Первая инлайн кнопка", reply_markup=keyboards.button_buy)
     await bot.send_message(message.chat.id,
-                           "Real cards won't work with me, no money will be debited from your account."
-                           " Use this test card number to pay for your Time Machine: `4242 4242 4242 4242`"
+                           "Не использовать реальную карту!"
+                           "Don't use real card"
+                           "Используйте тестовую карту"
+                           "Use this test card number to pay for your Time Machine"
+                           '4111 1111 1111 1111'
+                           '2024/12'
+                           '123'
+                           "3-D Secure:'12345678'"
                            "\n\nThis is your demo invoice:", parse_mode='Markdown')
     await bot.send_invoice(message.chat.id, title='Working Time Machine',
                            description='Want to visit your great-great-great-grandparents?'
@@ -87,7 +91,3 @@ async def got_payment(message: types.Message):
                            '\n\nUse /buy again to get a Time Machine for your friend!'.format(
                                message.successful_payment.total_amount / 100, message.successful_payment.currency),
                            parse_mode='Markdown')
-
-
-# if __name__ == '__main__':
-#     executor.start_polling(dp, skip_updates=True)
