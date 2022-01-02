@@ -4,7 +4,8 @@ from aiogram.types.message import ContentTypes
 from aiogram.utils import executor
 from data import config
 from loader import dp
-from keyboards.default import  keyboards
+from keyboards.inline.inline import choice
+from aiogram.dispatcher.filters import Command
 
 bot = Bot(token=config.BOT_TOKEN, parse_mode=types.ParseMode.HTML)
 PAYMENTS_PROVIDER_TOKEN = config.PAYMENTS_PROVIDER_TOKEN
@@ -21,12 +22,16 @@ shipping_options = [
 ]
 
 
-# @dp.message_handler(commands=['start'])
-# async def cmd_start(message: types.Message):
-#     await bot.send_message(message.chat.id,
-#                            "Hello, I'm the demo merchant bot."
-#                            " I can sell you a Time Machine."
-#                            " Use /buy to order one, /terms for Terms and Conditions")
+@dp.message_handler(text="🛒 Store")
+async def button_store(message: types.Message):
+    await message.answer(text="🛒 Choose a product category", reply_markup=choice)
+
+
+@dp.message_handler(text="❗ Info")
+async def button_info(message: types.Message):
+    await bot.send_message(message.chat.id,
+                           "Hello, I'm the demo bot 🤖\n"
+                           "I can sell you mining components 🚀")
 
 
 # @dp.message_handler(commands=['terms'])
@@ -41,8 +46,8 @@ shipping_options = [
 #                            '3. If you would like a refund, kindly apply for one yesterday and we will have sent it'
 #                            ' to you immediately.')
 
-@dp.message_handler(text="🛒 Buy")
-async def buy_apple(message: types.Message):
+@dp.message_handler(text="🛒 CPU")
+async def buy_cpu(message: types.Message):
     await bot.send_message(message.chat.id,
                            "Не использовать реальную карту!"
                            "Don't use real card"
