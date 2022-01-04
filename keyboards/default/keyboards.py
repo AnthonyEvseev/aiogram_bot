@@ -9,7 +9,7 @@ button_info = KeyboardButton('❗ Info')
 
 # button_subscribe = InlineKeyboardMarkup(text='♡ Subscribe', callback_data=other_callback.new(subscribe='subscribe',quantity=1))
 # button_info = InlineKeyboardMarkup('❗ Help')
-# button_infoon_history = InlineKeyboardMarkup('📖 Histiry')
+# button_info_history = InlineKeyboardMarkup('📖 History')
 
 # cancel = InlineKeyboardMarkup(text='❌ cancel', callback_data=buy_callback.new(item_name='cancel', quantity=1))
 
