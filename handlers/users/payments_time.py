@@ -4,7 +4,7 @@ from aiogram.types.message import ContentTypes
 from aiogram.utils import executor
 from data import config
 from loader import dp
-from keyboards.inline.inline import choice
+from keyboards.inline.inline_mane import choice
 from aiogram.dispatcher.filters import Command
 
 bot = Bot(token=config.BOT_TOKEN, parse_mode=types.ParseMode.HTML)
