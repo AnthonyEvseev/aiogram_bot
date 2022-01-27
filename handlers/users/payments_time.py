@@ -5,6 +5,8 @@ from aiogram.utils import executor
 from data import config
 from loader import dp
 from keyboards.inline.inline_mane import choice
+from keyboards.inline.cpu import choice_cpu
+from keyboards.default import callback_datas
 from aiogram.dispatcher.filters import Command
 
 bot = Bot(token=config.BOT_TOKEN, parse_mode=types.ParseMode.HTML)
@@ -25,6 +27,11 @@ shipping_options = [
 @dp.message_handler(text="🛒 Store")
 async def button_store(message: types.Message):
     await message.answer(text="🛒 Choose a product category", reply_markup=choice)
+
+
+# @dp.message_handler(text="🛒 CPU")
+# async def button_store(message: types.Message):
+#     await message.answer(text="🛒 Choose a product category", reply_markup=choice_cpu)
 
 
 @dp.message_handler(text="❗ Info")
