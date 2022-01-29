@@ -3,7 +3,7 @@ from aiogram import types
 from aiogram.types.message import ContentTypes
 from data import config
 from loader import dp
-from keyboards.inline.cpu import choice_cpu
+from keyboards.inline.menu import menu
 
 bot = Bot(token=config.BOT_TOKEN, parse_mode=types.ParseMode.HTML)
 PAYMENTS_PROVIDER_TOKEN = config.PAYMENTS_PROVIDER_TOKEN
@@ -22,7 +22,7 @@ shipping_options = [
 
 @dp.message_handler(text="🛒 Store")
 async def button_store(message: types.Message):
-    await message.answer(text="🛒 Choose a product category", reply_markup=choice_cpu)
+    await message.answer(text="🛒 Choose a product category", reply_markup=menu)
 
 
 # @dp.message_handler(text="🛒 CPU")
