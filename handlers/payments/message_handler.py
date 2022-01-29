@@ -1,13 +1,9 @@
 from aiogram import Bot
 from aiogram import types
 from aiogram.types.message import ContentTypes
-from aiogram.utils import executor
 from data import config
 from loader import dp
-from keyboards.inline.inline_mane import choice
 from keyboards.inline.cpu import choice_cpu
-from keyboards.default import callback_datas
-from aiogram.dispatcher.filters import Command
 
 bot = Bot(token=config.BOT_TOKEN, parse_mode=types.ParseMode.HTML)
 PAYMENTS_PROVIDER_TOKEN = config.PAYMENTS_PROVIDER_TOKEN
@@ -26,7 +22,7 @@ shipping_options = [
 
 @dp.message_handler(text="🛒 Store")
 async def button_store(message: types.Message):
-    await message.answer(text="🛒 Choose a product category", reply_markup=choice)
+    await message.answer(text="🛒 Choose a product category", reply_markup=choice_cpu)
 
 
 # @dp.message_handler(text="🛒 CPU")
@@ -87,6 +83,8 @@ async def shipping(shipping_query: types.ShippingQuery):
     await bot.answer_shipping_query(shipping_query.id, ok=True, shipping_options=shipping_options,
                                     error_message='Oh, seems like our Dog couriers are having a lunch right now.'
                                                   ' Try again later!')
+
+
 @dp.pre_checkout_query_handler(lambda query: True)
 async def checkout(pre_checkout_query: types.PreCheckoutQuery):
     await bot.answer_pre_checkout_query(pre_checkout_query.id, ok=True,
