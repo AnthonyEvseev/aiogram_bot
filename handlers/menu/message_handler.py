@@ -25,16 +25,12 @@ async def button_store(message: types.Message):
     await message.answer(text="🛒 Choose a product category", reply_markup=menu)
 
 
-# @dp.message_handler(text="🛒 CPU")
-# async def button_store(message: types.Message):
-#     await message.answer(text="🛒 Choose a product category", reply_markup=choice_cpu)
-
-
 @dp.message_handler(text="❗ Info")
 async def button_info(message: types.Message):
     await bot.send_message(message.chat.id,
                            "Hello, I'm the demo bot 🤖\n"
-                           "I can sell you mining components 🚀")
+                           "I can sell you mining components 🚀\n"
+                           "My creator is too lazy to make a large assortment 😭")
 
 
 # @dp.message_handler(commands=['terms'])
