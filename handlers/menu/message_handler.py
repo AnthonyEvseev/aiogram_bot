@@ -20,6 +20,7 @@ shipping_options = [
 ]
 
 
+
 @dp.message_handler(text="🛒 Store")
 async def button_store(message: types.Message):
     await message.answer(text="🛒 Choose a product category!", reply_markup=menu)
