@@ -44,6 +44,7 @@ async def button_info(message: types.Message):
 #                            ' May 2075 and November 4000 C.E.\n'
 #                            '3. If you would like a refund, kindly apply for one yesterday and we will have sent it'
 #                            ' to you immediately.')
+#
 
 @dp.message_handler(text="🛒 CPU")
 async def buy_cpu(message: types.Message):
