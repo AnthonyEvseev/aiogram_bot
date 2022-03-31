@@ -2,5 +2,5 @@
 #
 # buy_callback = CallbackData('buy', 'item_name', 'quantity')
 # other_callback = CallbackData('other', 'subscribe', 'quantity')
-def other_callback():
-    return None
+# def other_callback():
+#     return None

@@ -29,7 +29,7 @@ async def button_store(message: types.Message):
 async def button_info(message: types.Message):
     await bot.send_message(message.chat.id,
                            "Hello, I'm the demo bot 🤖\n"
-                           "I can sell you mining components 🚀\n"
+                           "I can show you the online store  🚀\n"
                            "My creator is too lazy to make a large assortment 😭")
 
 
@@ -48,14 +48,14 @@ async def button_info(message: types.Message):
 @dp.message_handler(text="🛒 CPU")
 async def buy_cpu(message: types.Message):
     await bot.send_message(message.chat.id,
-                           "Не использовать реальную карту!"
-                           "Don't use real card"
-                           "Используйте тестовую карту"
-                           "Use this test card number to pay for your Time Machine"
-                           '4111 1111 1111 1111'
-                           '2024/12'
-                           '123'
-                           "3-D Secure:'12345678'"
+                           "Не использовать реальную карту!\n"
+                           "Don't use real card!\n\n"
+                           "Используйте тестовую карту!\n"
+                           "Use this test card number to pay for your Time Machine!\n\n"
+                           '4111 1111 1111 1111\n'
+                           '2024/12\n'
+                           '123\n'
+                           "3-D Secure:'12345678'\n"
                            "\n\nThis is your demo invoice:", parse_mode='Markdown')
     await bot.send_invoice(message.chat.id, title='Working Time Machine',
                            description='Want to visit your great-great-great-grandparents?'
