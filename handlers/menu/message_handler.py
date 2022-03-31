@@ -18,7 +18,7 @@ shipping_options = [
     types.ShippingOption(id='instant', title='WorldWide Teleporter').add(types.LabeledPrice('Teleporter', 1000)),
     types.ShippingOption(id='pickup', title='Local pickup').add(types.LabeledPrice('Pickup', 300)),
 ]
-
+#тест
 
 @dp.message_handler(text="🛒 Store")
 async def button_store(message: types.Message):
@@ -77,23 +77,23 @@ async def buy_cpu(message: types.Message):
 @dp.shipping_query_handler(lambda query: True)
 async def shipping(shipping_query: types.ShippingQuery):
     await bot.answer_shipping_query(shipping_query.id, ok=True, shipping_options=shipping_options,
-                                    error_message='Oh, seems like our Dog couriers are having a lunch right now.'
-                                                  ' Try again later!')
+                                    error_message='О, кажется, наши курьеры-собаки сейчас обедают.'
+                                                  ' Попробуйте позже!')
 
 
 @dp.pre_checkout_query_handler(lambda query: True)
 async def checkout(pre_checkout_query: types.PreCheckoutQuery):
     await bot.answer_pre_checkout_query(pre_checkout_query.id, ok=True,
-                                        error_message="Aliens tried to steal your card's CVV,"
-                                                      " but we successfully protected your credentials,"
-                                                      " try to pay again in a few minutes, we need a small rest.")
+                                        error_message="Инопланетяне пытались украсть CVV вашей карты,"
+                                                      " но мы успешно защитили ваши учетные данные,"
+                                                      " попробуй еще раз заплатить через несколько минут, нужен небольшой отдых..")
 
 
 @dp.message_handler(content_types=ContentTypes.SUCCESSFUL_PAYMENT)
 async def got_payment(message: types.Message):
     await bot.send_message(message.chat.id,
-                           'Hoooooray! Thanks for payment! We will proceed your order for `{} {}`'
-                           ' as fast as possible! Stay in touch.'
-                           '\n\nUse /buy again to get a Time Machine for your friend!'.format(
+                           'Ура! Спасибо за оплату! Мы обработаем ваш заказ на `{} {}`'
+                           ' как можно быстрее! Оставайтесь на связи.'
+                           '\n\nИспользуйте /buy еще раз, чтобы получить Машину времени для вашего друга!'.format(
                                message.successful_payment.total_amount / 100, message.successful_payment.currency),
                            parse_mode='Markdown')

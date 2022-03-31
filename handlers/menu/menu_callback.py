@@ -14,7 +14,7 @@ async def button_store(callback: types.CallbackQuery):
 async def button_store(callback: types.CallbackQuery):
     await callback.message.answer(text="🛒 Select GPU", reply_markup=gpu_mane.gpu)
     await callback.answer()
-#
+
 # @dp.callback_query_handler(text="RAM")
 # async def button_store(callback: types.CallbackQuery):
 #     await callback.message.answer(text="🛒 Select RAM", reply_markup=menu.ram)
