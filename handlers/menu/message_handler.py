@@ -36,9 +36,12 @@ async def button_store(message: types.Message):
 @dp.message_handler(text="❗ Info")
 async def button_info(message: types.Message):
     await bot.send_message(message.chat.id,
-                           "Hello, I'm the demo bot 🤖\n"
-                           "I can show you the online store  🚀\n"
-                           "My creator is too lazy to make a large assortment 😭")
+                           "Hellow, Я TonyTestBot 🚀\n"
+                           "Для друзей просто Tony 😏\n\n"
+                           'После нажатия на кнопку "Store"\n'
+                           'откроется интернет магазин,\n'
+                           'где ты сможешь сделать заказ 🛒\n\n'
+                           "Я пока не закончен, но скоро всё будет 🔥")
 
 
 # @dp.message_handler(commands=['terms'])
