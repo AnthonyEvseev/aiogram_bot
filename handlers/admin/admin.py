@@ -4,6 +4,8 @@ from loader import dp
 from aiogram import types
 
 
+# Админка бота
+
 class Admin_bot(StatesGroup):
     name = State()
     #    discription = State()
