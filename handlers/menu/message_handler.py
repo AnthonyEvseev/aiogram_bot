@@ -5,8 +5,13 @@ from data import config
 from loader import dp
 from keyboards.inline.menu import menu
 
-#
+#   Этот файл в основном отлавливает нажатие клавиатуры на клавной странице бота
+# после нажатия /start
+
+# Присваивание конфига токена бота. Токены бота нужно присваивать в файле .env
+# Токен бота из BotFather
 bot = Bot(token=config.BOT_TOKEN, parse_mode=types.ParseMode.HTML)
+# Токен оплаты из BotFather
 PAYMENTS_PROVIDER_TOKEN = config.PAYMENTS_PROVIDER_TOKEN
 
 # Цена за товар
@@ -20,10 +25,12 @@ shipping_options = [
     types.ShippingOption(id='pickup', title='Local pickup').add(types.LabeledPrice('Pickup', 300)),
 ]
 
+
 # Отлавливает нажатие на кнопку "🛒 Store"
 @dp.message_handler(text="🛒 Store")
 async def button_store(message: types.Message):
     await message.answer(text="🛒 Choose a product category!", reply_markup=menu)
+
 
 # Отлавливает нажатие на кнопку "❗ Info"
 @dp.message_handler(text="❗ Info")
