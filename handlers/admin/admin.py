@@ -5,10 +5,7 @@ from loader import dp
 from data import config
 
 bot = Bot(token=config.BOT_TOKEN, parse_mode=types.ParseMode.HTML)
-
-
 # Админка бота
-
 
 class Admin_bot(StatesGroup):
     name = State()
