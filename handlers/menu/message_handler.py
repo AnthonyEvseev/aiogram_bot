@@ -5,26 +5,27 @@ from data import config
 from loader import dp
 from keyboards.inline.menu import menu
 
+#
 bot = Bot(token=config.BOT_TOKEN, parse_mode=types.ParseMode.HTML)
 PAYMENTS_PROVIDER_TOKEN = config.PAYMENTS_PROVIDER_TOKEN
 
-# Setup prices
+# Цена за товар
 prices = [
     types.LabeledPrice(label='Working Time Machine', amount=5750),
     types.LabeledPrice(label='Gift wrapping', amount=500),
 ]
-# Setup shipping options
+# Устанавливается цена за доставку
 shipping_options = [
     types.ShippingOption(id='instant', title='WorldWide Teleporter').add(types.LabeledPrice('Teleporter', 1000)),
     types.ShippingOption(id='pickup', title='Local pickup').add(types.LabeledPrice('Pickup', 300)),
 ]
-#тест
 
+# Отлавливает нажатие на кнопку "🛒 Store"
 @dp.message_handler(text="🛒 Store")
 async def button_store(message: types.Message):
     await message.answer(text="🛒 Choose a product category!", reply_markup=menu)
 
-
+# Отлавливает нажатие на кнопку "❗ Info"
 @dp.message_handler(text="❗ Info")
 async def button_info(message: types.Message):
     await bot.send_message(message.chat.id,
