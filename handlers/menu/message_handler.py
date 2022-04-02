@@ -1,5 +1,4 @@
-from aiogram import Bot
-from aiogram import types
+from aiogram import Bot, types
 from aiogram.types.message import ContentTypes
 from data import config
 from loader import dp
