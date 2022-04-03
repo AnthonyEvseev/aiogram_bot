@@ -1,6 +1,6 @@
 from aiogram import types
 from loader import dp
-from keyboards.inline_menu.inline_cpu import cpu_intel, cpu_amd
+from keyboards.inline_keyboards.inline_cpu import cpu_intel, cpu_amd
 
 
 @dp.callback_query_handler(text="AMD")

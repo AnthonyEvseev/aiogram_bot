@@ -1,6 +1,6 @@
 from aiogram import types
 from aiogram.dispatcher.filters.builtin import CommandStart
-from keyboards.keyboards_menu.keyboards import greed_kb
+from keyboards.keyboards.keyboards import greed_kb
 
 from loader import dp
 

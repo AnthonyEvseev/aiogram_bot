@@ -1,7 +1,7 @@
 from aiogram import types
 from loader import dp
-from keyboards.inline_menu.inline_gpu import gpu_mane
-from keyboards.inline_menu.inline_cpu import cpu_mane
+from keyboards.inline_keyboards.inline_gpu import gpu_mane
+from keyboards.inline_keyboards.inline_cpu import cpu_mane
 
 
 @dp.callback_query_handler(text="CPU")
