@@ -11,9 +11,12 @@ ID = None
 # Админка бота
 
 class Admin_bot(StatesGroup):
+    item_id = State()
     name = State()
     discription = State()
     price = State()
+    amount = State()
+    img_item = State()
 
 
 @dp.message_handler(commands="mod", is_chat_admin=True)
@@ -65,6 +68,24 @@ async def load_price(message: types.Message, state: FSMContext):
     if message.from_user.id == ID:
         async with state.proxy() as data:
             data['price'] = message.text
+        await Admin_bot.next()
+        await message.reply('Введите количество товара')
+
+
+@dp.message_handler(state=Admin_bot.amount)
+async def load_name(message: types.Message, state: FSMContext):
+    if message.from_user.id == ID:
+        async with state.proxy() as data:
+            data['amount'] = message.text
+        await Admin_bot.next()
+        await message.reply('Добавьте изображение')
+
+
+@dp.message_handler(content_types=['photo'], state=Admin_bot.img_item)
+async def load_name(message: types.Message, state: FSMContext):
+    if message.from_user.id == ID:
+        async with state.proxy() as data:
+            data['img_item'] = message.photo[0].file_id
         await message.reply('Данные сохранены')
         await sql_admin.sql_add_command(state)
         await state.finish()
