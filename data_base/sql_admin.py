@@ -1,5 +1,5 @@
+from loader import bot
 import sqlite3 as sq
-# from loader import bot
 
 
 def sql_start():

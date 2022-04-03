@@ -1,8 +1,7 @@
-from aiogram import types, Bot, Dispatcher
+from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from loader import dp, bot
-from data_base import config
 from aiogram.dispatcher.filters import Text
 from data_base import sql_admin
 
