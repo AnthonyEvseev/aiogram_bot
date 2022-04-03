@@ -15,3 +15,9 @@ async def sql_add_command(state):
     async with state.proxy() as data:
         cur.execute('INSERT INTO menu VALUES (?, ?, ?)', tuple(data.values()))
         base.commit()
+
+
+async def sql_read(state):
+
+    for ret in cur.execute('SELECT * FROM menu').fetchall():
+        await bot.send_message(message.from_user.id, f'Название: {ret[1]}\nОписание: {ret[2]}\nЦена: {ret[3]}')

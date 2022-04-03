@@ -17,7 +17,7 @@ class Admin_bot(StatesGroup):
     price = State()
 
 
-@dp.message_handler(commands="moderator", is_chat_admin=True)
+@dp.message_handler(commands="mod", is_chat_admin=True)
 async def make_changes_command(message: types.Message):
     global ID
     ID = message.from_user.id

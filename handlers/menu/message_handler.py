@@ -31,6 +31,12 @@ async def button_store(message: types.Message):
     await message.answer(text="🛒 Choose a product category!", reply_markup=menu)
 
 
+# @dp.message_handler(text="🛒 Base")
+# async def button_base(message: types.Message):
+#     for ret in cur.execute('SELECT * FROM menu').fetchall():
+#         await bot.send_message(message.from_user.id, f'Название: {ret[1]}\nОписание: {ret[2]}\nЦена: {ret[3]}')
+
+
 # Отлавливает нажатие на кнопку "❗ Info"
 @dp.message_handler(text="❗ Info")
 async def button_info(message: types.Message):
