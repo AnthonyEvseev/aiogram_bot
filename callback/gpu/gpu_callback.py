@@ -1,6 +1,6 @@
 from aiogram import types
 from loader import dp
-from keyboards.inline.inline_gpu import gpu_asus, gpu_msi
+from keyboards.inline_menu.inline_gpu import gpu_asus, gpu_msi
 
 
 @dp.callback_query_handler(text="ASUS")

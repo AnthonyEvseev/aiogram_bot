@@ -2,7 +2,7 @@ from aiogram import types
 from aiogram.types.message import ContentTypes
 from loader import dp, bot, PAYMENTS_PROVIDER_TOKEN
 from data_base import sql_admin
-from keyboards.inline.menu import menu
+from keyboards.inline_menu.menu import menu
 
 #   Этот файл в основном отлавливает нажатие клавиатуры на клавной странице бота
 # после нажатия /start
