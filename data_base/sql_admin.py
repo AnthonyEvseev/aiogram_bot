@@ -1,4 +1,5 @@
 import sqlite3 as sq
+# from loader import bot
 
 
 def sql_start():
@@ -17,7 +18,6 @@ async def sql_add_command(state):
         base.commit()
 
 
-async def sql_read(state):
-
+async def sql_read(message):
     for ret in cur.execute('SELECT * FROM menu').fetchall():
-        await bot.send_message(message.from_user.id, f'Название: {ret[1]}\nОписание: {ret[2]}\nЦена: {ret[3]}')
+        await bot.send_message(message.from_user.id, f'Название: {ret[0]}\nОписание: {ret[1]}\nЦена: {ret[2]}')

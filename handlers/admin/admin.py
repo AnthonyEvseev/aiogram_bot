@@ -2,9 +2,9 @@ from aiogram import types, Bot, Dispatcher
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from loader import dp, bot
-from data import config
+from data_base import config
 from aiogram.dispatcher.filters import Text
-from data import sql_admin
+from data_base import sql_admin
 
 ID = None
 

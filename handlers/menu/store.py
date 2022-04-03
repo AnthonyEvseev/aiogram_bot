@@ -1,17 +1,11 @@
-from aiogram import Bot, types
+from aiogram import types
 from aiogram.types.message import ContentTypes
-from data import config
-from loader import dp
+from loader import dp, bot, PAYMENTS_PROVIDER_TOKEN
+from data_base import sql_admin
 from keyboards.inline.menu import menu
 
 #   Этот файл в основном отлавливает нажатие клавиатуры на клавной странице бота
 # после нажатия /start
-
-# Присваивание конфига токена бота. Токены бота нужно присваивать в файле .env
-# Токен бота из BotFather
-bot = Bot(token=config.BOT_TOKEN, parse_mode=types.ParseMode.HTML)
-# Токен оплаты из BotFather
-PAYMENTS_PROVIDER_TOKEN = config.PAYMENTS_PROVIDER_TOKEN
 
 # Цена за товар
 prices = [
@@ -31,10 +25,9 @@ async def button_store(message: types.Message):
     await message.answer(text="🛒 Choose a product category!", reply_markup=menu)
 
 
-# @dp.message_handler(text="🛒 Base")
-# async def button_base(message: types.Message):
-#     for ret in cur.execute('SELECT * FROM menu').fetchall():
-#         await bot.send_message(message.from_user.id, f'Название: {ret[1]}\nОписание: {ret[2]}\nЦена: {ret[3]}')
+@dp.message_handler(text="🛒 Base")
+async def button_base(message: types.Message):
+    await sql_admin.sql_read(message)
 
 
 # Отлавливает нажатие на кнопку "❗ Info"
