@@ -4,6 +4,7 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 from loader import dp, bot
 from data import config
 from aiogram.dispatcher.filters import Text
+from data import sql_admin
 
 ID = None
 
@@ -65,7 +66,6 @@ async def load_price(message: types.Message, state: FSMContext):
     if message.from_user.id == ID:
         async with state.proxy() as data:
             data['price'] = message.text
-
-        async with state.proxy() as data:
-            await message.reply(str(data))
+        await message.reply('Данные сохранены')
+        await sql_admin.sql_add_command(state)
         await state.finish()
