@@ -1,2 +1,2 @@
-from . import default
+from . import keyboards_menu
 from . import inline
