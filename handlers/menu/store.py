@@ -4,8 +4,20 @@ from loader import dp, bot, PAYMENTS_PROVIDER_TOKEN
 from data_base import sql_admin
 from keyboards.inline_keyboards.menu_inline import menu
 
+
 #   Этот файл в основном отлавливает нажатие клавиатуры на клавной странице бота
 # после нажатия /start
+
+
+# ТЕСТОВЫЙ
+# ХЕНДЛЕТ
+# НЕ
+# ЗАБУДЬ
+# УДАЛИТЬ
+# @dp.message_handler(commands='test')
+# async def alarm(message: types.Message):
+#     await message.answer(f"Ваш ID: {message.from_user.id}")
+
 
 # Цена за товар
 prices = [
@@ -27,7 +39,7 @@ async def button_store(message: types.Message):
 
 @dp.message_handler(text="🍴 Menu")
 async def button_base(message: types.Message):
-    await sql_admin.sql_read(message)
+    await sql_admin.sql_read_store_menu(message)
 
 
 # Отлавливает нажатие на кнопку "❗ Info"
