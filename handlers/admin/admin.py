@@ -19,7 +19,7 @@ class Admin_bot(StatesGroup):
     img_item = State()
 
 
-@dp.message_handler(commands="mod", is_chat_admin=True)
+@dp.message_handler(commands="admin_mod", is_chat_admin=True)
 async def make_changes_command(message: types.Message):
     global ID
     ID = message.from_user.id
@@ -34,8 +34,8 @@ async def cm_start(message: types.Message):
         await message.reply('Введите название продукта')
 
 
-@dp.message_handler(state='*', commands='отмена')
-@dp.message_handler(Text(equals='отмена', ignore_case=True), state='*')
+@dp.message_handler(state='*', commands='cansel')
+@dp.message_handler(Text(equals='cansel', ignore_case=True), state='*')
 async def cancel_handler(message: types.Message, state: FSMContext):
     if message.from_user.id == ID:
         current_state = await state.get_state()
