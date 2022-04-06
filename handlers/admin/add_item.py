@@ -1,16 +1,18 @@
-from .admin import Admin_bot, ID
+from .admin import Admin_bot
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from loader import dp, bot
 from aiogram.dispatcher.filters import Text
 from data_base import sql_admin
-
+from configs.config import ADMINS
 
 @dp.message_handler(commands="add", states=None)
 async def cm_start(message: types.Message):
-    # if message.from_user.id == ID:
-    #     await Admin_bot.name.set()
-    #     await message.reply('Введите название продукта')
+    for admin in ADMINS:
+        try:
+            await bot.send_message(admin, "Введи команду")
+        except:
+            pass
     await Admin_bot.name.set()
     await message.reply('Введите название продукта')
 
@@ -18,12 +20,11 @@ async def cm_start(message: types.Message):
 @dp.message_handler(state='*', commands='cansel')
 @dp.message_handler(Text(equals='cansel', ignore_case=True), state='*')
 async def cancel_handler(message: types.Message, state: FSMContext):
-    # if message.from_user.id == ID:
-    #     current_state = await state.get_state()
-    #     if current_state is None:
-    #         return
-    #     await state.finish()
-    #     await message.reply('Ok')
+    for admin in ADMINS:
+        try:
+            await bot.send_message(admin, "Введи команду")
+        except:
+            pass
     current_state = await state.get_state()
     if current_state is None:
         return
@@ -33,11 +34,11 @@ async def cancel_handler(message: types.Message, state: FSMContext):
 
 @dp.message_handler(state=Admin_bot.name)
 async def load_name(message: types.Message, state: FSMContext):
-    # if message.from_user.id == ID:
-    #     async with state.proxy() as data:
-    #         data['name'] = message.text
-    #     await Admin_bot.next()
-    #     await message.reply('Введите описание')
+    for admin in ADMINS:
+        try:
+            await bot.send_message(admin, "Введи команду")
+        except:
+            pass
     async with state.proxy() as data:
         data['name'] = message.text
     await Admin_bot.next()
@@ -46,11 +47,11 @@ async def load_name(message: types.Message, state: FSMContext):
 
 @dp.message_handler(state=Admin_bot.discription)
 async def load_name(message: types.Message, state: FSMContext):
-    # if message.from_user.id == ID:
-    #     async with state.proxy() as data:
-    #         data['discription'] = message.text
-    #     await Admin_bot.next()
-    #     await message.reply('Введите цену')
+    for admin in ADMINS:
+        try:
+            await bot.send_message(admin, "Введи команду")
+        except:
+            pass
     async with state.proxy() as data:
         data['discription'] = message.text
     await Admin_bot.next()
@@ -59,11 +60,11 @@ async def load_name(message: types.Message, state: FSMContext):
 
 @dp.message_handler(state=Admin_bot.price)
 async def load_price(message: types.Message, state: FSMContext):
-    # if message.from_user.id == ID:
-    #     async with state.proxy() as data:
-    #         data['price'] = message.text
-    #     await Admin_bot.next()
-    #     await message.reply('Введите количество товара на складе')
+    for admin in ADMINS:
+        try:
+            await bot.send_message(admin, "Введи команду")
+        except:
+            pass
     async with state.proxy() as data:
         data['price'] = message.text
     await Admin_bot.next()
@@ -72,11 +73,11 @@ async def load_price(message: types.Message, state: FSMContext):
 
 @dp.message_handler(state=Admin_bot.amount)
 async def load_name(message: types.Message, state: FSMContext):
-    # if message.from_user.id == ID:
-    #     async with state.proxy() as data:
-    #         data['amount'] = message.text
-    #     await Admin_bot.next()
-    #     await message.reply('Добавьте изображение')
+    for admin in ADMINS:
+        try:
+            await bot.send_message(admin, "Введи команду")
+        except:
+            pass
     async with state.proxy() as data:
         data['amount'] = message.text
     await Admin_bot.next()
@@ -85,12 +86,11 @@ async def load_name(message: types.Message, state: FSMContext):
 
 @dp.message_handler(content_types=['photo'], state=Admin_bot.img_item)
 async def load_name(message: types.Message, state: FSMContext):
-    # if message.from_user.id == ID:
-    #     async with state.proxy() as data:
-    #         data['img_item'] = message.photo[0].file_id
-    #     await message.reply('Данные сохранены')
-    #     await sql_admin.sql_add_command(state)
-    #     await state.finish()
+    for admin in ADMINS:
+        try:
+            await bot.send_message(admin, "Введи команду")
+        except:
+            pass
     async with state.proxy() as data:
         data['img_item'] = message.photo[0].file_id
     await message.reply('Данные сохранены')
