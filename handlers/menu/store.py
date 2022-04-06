@@ -20,12 +20,12 @@ shipping_options = [
 
 
 # Отлавливает нажатие на кнопку "🛒 Store"
-@dp.message_handler(text="🛒 Store")
+@dp.message_handler(text="🛒 Basket")
 async def button_store(message: types.Message):
     await message.answer(text="🛒 Choose a product category!", reply_markup=menu)
 
 
-@dp.message_handler(text="🛒 Base")
+@dp.message_handler(text="🍴 Menu")
 async def button_base(message: types.Message):
     await sql_admin.sql_read(message)
 

@@ -1,8 +1,8 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
-button_buy = KeyboardButton('🛒 Store')
+button_buy = KeyboardButton('🍴 Menu')
 button_subscribe = KeyboardButton('♡ Subscribe')
-button_base = KeyboardButton('🛒 Base')
+button_base = KeyboardButton('🛒 Basket')
 button_info = KeyboardButton('❗ Info')
 
 greed_kb = ReplyKeyboardMarkup(resize_keyboard=True, input_field_placeholder="")

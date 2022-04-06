@@ -69,7 +69,7 @@ async def load_price(message: types.Message, state: FSMContext):
         async with state.proxy() as data:
             data['price'] = message.text
         await Admin_bot.next()
-        await message.reply('Введите количество товара')
+        await message.reply('Введите количество товара на складе')
 
 
 @dp.message_handler(state=Admin_bot.amount)
