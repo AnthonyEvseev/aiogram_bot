@@ -13,7 +13,7 @@ def sql_start():
                  'discription TEXT, price INTEGER, amount INTEGER, img_item TEXT)')
 
     # SQL запрос на создание таблицы 'check_admin'
-    base.execute('CREATE TABLE IF NOT EXISTS check_admin(admin_id INTEGER PRIMARY KEY)')
+    # base.execute('CREATE TABLE IF NOT EXISTS check_admin(admin_id INTEGER PRIMARY KEY)')
     base.commit()
 
 # Записывает результат проверки на админа в БД
