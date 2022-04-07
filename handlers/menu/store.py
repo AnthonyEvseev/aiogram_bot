@@ -3,7 +3,7 @@ from aiogram.types.message import ContentTypes
 from loader import dp, bot, PAYMENTS_PROVIDER_TOKEN
 from data_base import sql_admin
 from keyboards.inline_keyboards.menu_inline import menu
-
+from configs.config import ADMINS
 
 #   Этот файл в основном отлавливает нажатие клавиатуры
 #   на клавной странице бота
@@ -17,7 +17,7 @@ from keyboards.inline_keyboards.menu_inline import menu
 # УДАЛИТЬ
 # @dp.message_handler(commands='test')
 # async def alarm(message: types.Message):
-#     await message.answer(f"Ваш ID: {message.from_user.id}")
+#     print(type(ADMINS)), print(type(message.from_user.id))
 
 
 # Цена за товар
