@@ -5,5 +5,6 @@ button_subscribe = KeyboardButton('♡ Subscribe')
 button_base = KeyboardButton('🛒 Basket')
 button_info = KeyboardButton('❗ Info')
 
-greed_kb = ReplyKeyboardMarkup(resize_keyboard=True, input_field_placeholder="")
-greed_kb.add(button_buy, button_subscribe).add(button_base, button_info)
+mane_menu = ReplyKeyboardMarkup(resize_keyboard=True, input_field_placeholder="")
+mane_menu.add(button_buy, button_subscribe).add(button_base, button_info)
+
