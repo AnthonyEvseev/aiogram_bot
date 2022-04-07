@@ -5,6 +5,7 @@ from loader import dp, bot
 from aiogram.dispatcher.filters import Text
 from data_base import sql_admin
 from configs.config import ADMINS
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 
 # По команде "add" админ добавляет товар в базу бота
@@ -103,3 +104,24 @@ async def load_name(message: types.Message, state: FSMContext):
         else:
             await state.finish()
             await bot.send_message(message.chat.id, "У Вас нет прав администратора")
+
+
+@dp.message_handler(text='🗑️ Delete')
+async def del_item(message: types.Message):
+    for admin in ADMINS:
+        if message.from_user.id == int(admin):
+            read = await sql_admin.sql_read_delete()
+            for ret in read:
+                await bot.send_photo(message.from_user.id, ret[5],
+                                     f"Название товара: {ret[1]}\nКолличество в наличии:{ret[4]}")
+                await bot.send_message(message.from_user.id, text='⬆️ ⬆️ ⬆️ ⬆️ ⬆️ ⬆️',
+                                       reply_markup=InlineKeyboardMarkup().
+                                       add(InlineKeyboardButton(f'Удалить вышеуказанный товар "{ret[1]}"',
+                                                                callback_data=f'delete {ret[1]}')))
+
+
+@dp.callback_query_handler(Text(startswith='delete '))
+async def callback_delete(callback: types.CallbackQuery):
+    await sql_admin.sql_delete(callback.data.replace('delete ', ''))
+    await callback.message.answer(text=f"{callback.data.replace('delete ', '')} удалена.")
+    await callback.answer()

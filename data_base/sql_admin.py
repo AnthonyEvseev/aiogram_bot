@@ -16,11 +16,13 @@ def sql_start():
     # base.execute('CREATE TABLE IF NOT EXISTS check_admin(admin_id INTEGER PRIMARY KEY)')
     base.commit()
 
+
 # Записывает результат проверки на админа в БД
-async def sql_check_admin(state):
-    async with state.proxy() as data:
-        cur.execute('INSERT INTO check_admin VALUES ( ?)', tuple(data.values()))
-        base.commit()
+# async def sql_check_admin(state):
+#     async with state.proxy() as data:
+#         cur.execute('INSERT INTO check_admin VALUES ( ?)', tuple(data.values()))
+#         base.commit()
+
 
 # Записывает меню введенное админом в чате
 async def sql_add_command(state):
@@ -28,11 +30,16 @@ async def sql_add_command(state):
         cur.execute('INSERT INTO store_menu VALUES ( NULL, ?, ?, ?, ?, ?)', tuple(data.values()))
         base.commit()
 
-# Хер знает что это
-async def sql_read_check_admin(message):
-    for ret in cur.execute('SELECT * FROM check_admin').fetchall():
-        await bot.send_photo(message.from_user.id, ret[5], f'ID товара: {ret[0]}\nНазвание товара: {ret[1]}\n'
-                    f'Описание: {ret[2]}\nЦена: {ret[3]}$\nКолличество в наличии: {ret[4]}\n')
+
+# Запрашиваю данные из БД перед возможным удалением
+async def sql_read_delete():
+    return cur.execute('SELECT * FROM store_menu').fetchall()
+
+
+# Запрос на удалиение
+async def sql_delete(data):
+    return cur.execute('DELETE FROM store_menu WHERE name == ?', (data,))
+
 
 # Вывод меню
 async def sql_read_store_menu(message):
