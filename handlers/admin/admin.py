@@ -18,9 +18,9 @@ class Admin_bot(StatesGroup):
 
 @dp.message_handler(commands="mod")
 async def make_changes_command(message: types.Message):
-    for admin in ADMINS:
-        try:
-            await bot.send_message(message.from_user.id, "Введи команду")
-        except:
-            pass
     await message.delete()
+    for admin in ADMINS:
+        if message.from_user.id == int(admin):
+            await bot.send_message(message.chat.id, "Введи команду")
+        else:
+            await bot.send_message(message.chat.id, "У Вас нет прав администратора")
