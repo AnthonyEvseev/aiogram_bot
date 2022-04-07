@@ -38,7 +38,7 @@ async def sql_read_delete():
 
 # Запрос на удалиение
 async def sql_delete(data):
-    return cur.execute('DELETE FROM store_menu WHERE name == ?', (data,))
+    return cur.execute('DELETE FROM store_menu WHERE name == ?', (data,)), base.commit()
 
 
 # Вывод меню
