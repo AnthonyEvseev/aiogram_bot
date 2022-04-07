@@ -18,7 +18,7 @@ class Admin_bot(StatesGroup):
     img_item = State()
 
 
-@dp.message_handler(commands="add", states=None)
+@dp.message_handler(text="➕ Add", states=None)
 async def cm_start(message: types.Message, state: FSMContext):
     for admin in ADMINS:
         if message.from_user.id == int(admin):
@@ -32,16 +32,11 @@ async def cm_start(message: types.Message, state: FSMContext):
 @dp.message_handler(state='*', commands='cansel')
 @dp.message_handler(Text(equals='cansel', ignore_case=True), state='*')
 async def cancel_handler(message: types.Message, state: FSMContext):
-    for admin in ADMINS:
-        if message.from_user.id == int(admin):
-            current_state = await state.get_state()
-            if current_state is None:
-                return
-            await state.finish()
-            await bot.send_message('Ввод данных прекращён.')
-        else:
-            await state.finish()
-            await message.reply('У Вас нет прав администратора')
+    current_state = await state.get_state()
+    if current_state is None:
+        return
+    await state.finish()
+    await message.reply('Ввод данных прекращён.')
 
 
 @dp.message_handler(state=Admin_bot.name)
