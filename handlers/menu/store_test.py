@@ -32,15 +32,14 @@ shipping_options = [
 ]
 
 
+# @dp.message_handler(text="🍴 Menu")
+# async def button_base(message: types.Message):
+#     await sql_admin.sql_output_store_menu(message)
+
 # Отлавливает нажатие на кнопку "🛒 Store"
 @dp.message_handler(text="🛒 Basket")
 async def button_store(message: types.Message):
     await message.answer(text="🛒 Choose a product category!", reply_markup=menu)
-
-
-@dp.message_handler(text="🍴 Menu")
-async def button_base(message: types.Message):
-    await sql_admin.sql_output_store_menu(message)
 
 
 # Отлавливает нажатие на кнопку "❗ Info"
@@ -67,7 +66,7 @@ async def button_info(message: types.Message):
 #                            '3. If you would like a refund, kindly apply for one yesterday and we will have sent it'
 #                            ' to you immediately.')
 
-@dp.message_handler(text="🛒 CPU")
+@dp.message_handler(commands="buy")
 async def buy_cpu(message: types.Message):
     await bot.send_message(message.chat.id,
                            "Не использовать реальную карту!\n"
@@ -85,7 +84,7 @@ async def buy_cpu(message: types.Message):
                                        ' Shake hands with Hammurabi and take a stroll in the Hanging Gardens?'
                                        ' Order our Working Time Machine today!',
                            provider_token=PAYMENTS_PROVIDER_TOKEN,
-                           currency='usd',
+                           currency='rub',
                            photo_url='https://telegra.ph/file/d08ff863531f10bf2ea4b.jpg',
                            photo_height=512,  # !=0/None or picture won't be shown
                            photo_width=512,

@@ -1,2 +1,2 @@
 from . import admin
-from . import append_item
+from . import admin_panel

@@ -7,4 +7,4 @@ gpu = InlineKeyboardMarkup(text='GPU',
                            callback_data='GPU')
 
 menu = InlineKeyboardMarkup(row_width=2)
-menu.insert(cpu).insert(gpu)
+menu.add(cpu, gpu)
