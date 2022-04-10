@@ -40,7 +40,7 @@ async def button_store(message: types.Message):
 
 @dp.message_handler(text="🍴 Menu")
 async def button_base(message: types.Message):
-    await sql_admin.sql_read_store_menu(message)
+    await sql_admin.sql_output_store_menu(message)
 
 
 # Отлавливает нажатие на кнопку "❗ Info"
