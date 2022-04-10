@@ -99,7 +99,7 @@ async def load_name(message: types.Message, state: FSMContext):
             async with state.proxy() as data:
                 data['img_item'] = message.photo[0].file_id
             await message.reply('Данные сохранены')
-            await sql_admin.sql_add_command(state)
+            await sql_admin.sql_append_item_store_menu(state)
             await state.finish()
         else:
             await state.finish()
@@ -110,7 +110,7 @@ async def load_name(message: types.Message, state: FSMContext):
 async def del_item(message: types.Message):
     for admin in ADMINS:
         if message.from_user.id == int(admin):
-            read = await sql_admin.sql_read_delete()
+            read = await sql_admin.sql_read_store_menu()
             for ret in read:
                 await bot.send_photo(message.from_user.id, ret[5],
                                      f"Название товара: {ret[1]}\nКолличество в наличии:{ret[4]}")
@@ -122,6 +122,6 @@ async def del_item(message: types.Message):
 
 @dp.callback_query_handler(Text(startswith='delete '))
 async def callback_delete(callback: types.CallbackQuery):
-    await sql_admin.sql_delete(callback.data.replace('delete ', ''))
+    await sql_admin.sql_delete_item_store_menu(callback.data.replace('delete ', ''))
     await callback.message.answer(text=f"{callback.data.replace('delete ', '')} удалена.")
     await callback.answer()
