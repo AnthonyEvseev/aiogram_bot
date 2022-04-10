@@ -22,13 +22,6 @@ def sql_create_db():
     base.commit()
 
 
-# Записывает результат проверки на админа в БД
-# async def sql_check_admin(state):
-#     async with state.proxy() as data:
-#         cur.execute('INSERT INTO check_admin VALUES ( ?)', tuple(data.values()))
-#         base.commit()
-
-
 # Записывает в БД товары введенное админом в чате
 async def sql_append_item_store_menu(state):
     async with state.proxy() as data:
