@@ -86,7 +86,9 @@ async def load_name(message: types.Message, state: FSMContext):
             async with state.proxy() as data:
                 data['amount'] = message.text
             await Store_items.next()
-            await message.reply('Добавьте изображение')
+            await message.reply('Добавьте изображение\n\n'
+                                'Обязательно поставьте галочку\n'
+                                '"Сжать изображение"')
         else:
             await state.finish()
             await bot.send_message(message.chat.id, "У Вас нет прав администратора")
