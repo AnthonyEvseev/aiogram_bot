@@ -19,7 +19,7 @@ class Admin_bot(StatesGroup):
     img_item = State()
 
 
-@dp.message_handler(text="➕ Add", states=None)
+@dp.message_handler(text="➕ Append", states=None)
 async def cm_start(message: types.Message, state: FSMContext):
     for admin in ADMINS:
         if message.from_user.id == int(admin):
