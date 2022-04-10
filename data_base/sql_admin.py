@@ -24,25 +24,25 @@ def sql_create_db():
 #         base.commit()
 
 
-# Записывает меню введенное админом в чате
-async def sql_add_command(state):
+# Записывает в БД товары введенное админом в чате
+async def sql_append_item_store_menu(state):
     async with state.proxy() as data:
         cur.execute('INSERT INTO store_menu VALUES ( NULL, ?, ?, ?, ?, ?)', tuple(data.values()))
         base.commit()
 
 
-# Запрашиваю данные из БД перед возможным удалением
-async def sql_read_delete():
+# Запрашиваю данные из БД.
+async def sql_read_store_menu():
     return cur.execute('SELECT * FROM store_menu').fetchall()
 
 
 # Запрос на удалиение
-async def sql_delete(data):
+async def sql_delete_item_store_menu(data):
     return cur.execute('DELETE FROM store_menu WHERE name == ?', (data,)), base.commit()
 
 
-# Вывод меню
-async def sql_read_store_menu(message):
+# Вывод меню на главной странице
+async def sql_output_store_menu(message):
     for ret in cur.execute('SELECT * FROM store_menu').fetchall():
         await bot.send_photo(message.from_user.id, ret[5], f'Название товара: {ret[1]}\n'
                                                            f'Описание: {ret[2]}\nЦена: {ret[3]} ₽\n')
