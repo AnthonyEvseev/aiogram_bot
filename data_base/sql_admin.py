@@ -2,7 +2,7 @@ from loader import bot
 import sqlite3 as sq
 
 
-def sql_start():
+def sql_create_db():
     global base, cur
     base = sq.connect('store_data.db')
     cur = base.cursor()
