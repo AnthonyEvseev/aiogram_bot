@@ -14,7 +14,7 @@ async def on_startup(dispatcher):
     await on_startup_notify(dispatcher)
 
     # Включает базу данных
-    sql_admin.sql_create_db()
+    await sql_admin.sql_create_db()
 
 
 if __name__ == '__main__':
