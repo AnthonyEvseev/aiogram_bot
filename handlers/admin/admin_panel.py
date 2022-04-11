@@ -128,11 +128,6 @@ async def del_item(message: types.Message):
                 await bot.send_photo(message.from_user.id, ret[5],
                                      f"Название товара: {ret[1]}", reply_markup=delete_item)
 
-                # await bot.send_message(message.from_user.id, text='⬆️ ⬆️ ⬆️ ⬆️ ⬆️ ⬆️',
-                #                        reply_markup=InlineKeyboardMarkup().
-                #                        add(InlineKeyboardButton(f'Удалить вышеуказанный товар "{ret[1]}"',
-                #                                                 callback_data=f'delete {ret[1]}')))
-
 
 @dp.callback_query_handler(Text(startswith='delete '))
 async def callback_delete(callback: types.CallbackQuery):
