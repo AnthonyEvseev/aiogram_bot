@@ -1,13 +1,11 @@
-from aiogram.types import InlineKeyboardMarkup
-
-prise = InlineKeyboardMarkup(text='Сумма: ₽',
-                           callback_data='none')
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from handlers.callback_handlers.menu_callback import COUNTER_ITEM
 
 minus = InlineKeyboardMarkup(text='➖',
-                             callback_data='➖')
+                             callback_data="➖")
 
-none_item = InlineKeyboardMarkup(text='шт.',
-                                 callback_data='none')
+counter = InlineKeyboardMarkup(text='шт.',
+                               callback_data='test')
 
 plus = InlineKeyboardMarkup(text='➕',
                             callback_data='➕')
@@ -16,4 +14,4 @@ buy = InlineKeyboardMarkup(text='Добавить в корзину',
                            callback_data='buy')
 
 menu = InlineKeyboardMarkup(row_width=3)
-menu.add(prise).add(minus, none_item, plus).add(buy)
+menu.add(InlineKeyboardButton(f'Тест', callback_data='test')).add(minus, counter, plus).add(buy)
