@@ -6,6 +6,7 @@ from aiogram.dispatcher.filters import Text
 from data_base import sql_admin
 from configs.config import ADMINS
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from keyboards.delete_item_admin import delete_item
 
 
 # По команде "add" админ добавляет товар в базу бота
@@ -66,6 +67,11 @@ async def load_name(message: types.Message, state: FSMContext):
             await bot.send_message(message.chat.id, "У Вас нет прав администратора")
 
 
+@dp.message_handler(lambda message: not message.text.isdigit(), state=Store_items.price)
+async def process_load_price_invalid(message: types.Message):
+    return await message.reply("Цена должна быть числом.\nВведите, пожалуйста, число")
+
+
 @dp.message_handler(state=Store_items.price)
 async def load_price(message: types.Message, state: FSMContext):
     for admin in ADMINS:
@@ -79,8 +85,13 @@ async def load_price(message: types.Message, state: FSMContext):
             await bot.send_message(message.chat.id, "У Вас нет прав администратора")
 
 
+@dp.message_handler(lambda message: not message.text.isdigit(), state=Store_items.amount)
+async def process_load_load_amount_invalid(message: types.Message):
+    return await message.reply("Колличество товара должна быть числом.\nВведите, пожалуйста, число")
+
+
 @dp.message_handler(state=Store_items.amount)
-async def load_name(message: types.Message, state: FSMContext):
+async def load_amount(message: types.Message, state: FSMContext):
     for admin in ADMINS:
         if message.from_user.id == int(admin):
             async with state.proxy() as data:
@@ -115,11 +126,12 @@ async def del_item(message: types.Message):
             read = await sql_admin.sql_read_store_menu()
             for ret in read:
                 await bot.send_photo(message.from_user.id, ret[5],
-                                     f"Название товара: {ret[1]}\nКолличество в наличии:{ret[4]}")
-                await bot.send_message(message.from_user.id, text='⬆️ ⬆️ ⬆️ ⬆️ ⬆️ ⬆️',
-                                       reply_markup=InlineKeyboardMarkup().
-                                       add(InlineKeyboardButton(f'Удалить вышеуказанный товар "{ret[1]}"',
-                                                                callback_data=f'delete {ret[1]}')))
+                                     f"Название товара: {ret[1]}", reply_markup=delete_item)
+
+                # await bot.send_message(message.from_user.id, text='⬆️ ⬆️ ⬆️ ⬆️ ⬆️ ⬆️',
+                #                        reply_markup=InlineKeyboardMarkup().
+                #                        add(InlineKeyboardButton(f'Удалить вышеуказанный товар "{ret[1]}"',
+                #                                                 callback_data=f'delete {ret[1]}')))
 
 
 @dp.callback_query_handler(Text(startswith='delete '))
