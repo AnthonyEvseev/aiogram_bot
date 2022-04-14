@@ -5,7 +5,6 @@ from loader import dp, bot
 from aiogram.dispatcher.filters import Text
 from data_base import sql_admin
 from configs.config import ADMINS
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from keyboards.delete_item_admin import delete_item
 
 
@@ -127,10 +126,3 @@ async def del_item(message: types.Message):
             for ret in read:
                 await bot.send_photo(message.from_user.id, ret[5],
                                      f"Название товара: {ret[1]}", reply_markup=delete_item)
-
-
-@dp.callback_query_handler(Text(startswith='delete '))
-async def callback_delete(callback: types.CallbackQuery):
-    await sql_admin.sql_delete_item_store_menu(callback.data.replace('delete ', ''))
-    await callback.message.answer(text=f"{callback.data.replace('delete ', '')} удалена.")
-    await callback.answer()
