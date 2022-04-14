@@ -1,14 +1,7 @@
 from aiogram import types
 from aiogram.types.message import ContentTypes
 from loader import dp, bot, PAYMENTS_PROVIDER_TOKEN
-from data_base import sql_admin
 from keyboards.inline_keyboards.menu_inline import menu
-from configs.config import ADMINS
-
-#   Этот файл в основном отлавливает нажатие клавиатуры
-#   на клавной странице бота
-#   после нажатия /start
-
 
 # ТЕСТОВЫЙ
 # ХЕНДЛЕТ
@@ -31,10 +24,6 @@ shipping_options = [
     types.ShippingOption(id='pickup', title='Local pickup').add(types.LabeledPrice('Pickup', 300)),
 ]
 
-
-# @dp.message_handler(text="🍴 Menu")
-# async def button_base(message: types.Message):
-#     await sql_admin.sql_output_store_menu(message)
 
 # Отлавливает нажатие на кнопку "🛒 Store"
 @dp.message_handler(text="🛒 Basket")
