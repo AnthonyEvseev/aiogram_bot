@@ -13,4 +13,4 @@ buy = InlineKeyboardMarkup(text='Добавить в корзину',
                            callback_data='buy')
 
 menu = InlineKeyboardMarkup(row_width=3)
-menu.add(InlineKeyboardButton(f'Тест', callback_data='test')).add(minus, counter, plus).add(buy)
+menu.add(minus, counter, plus).add(buy)
