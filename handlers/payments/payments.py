@@ -3,16 +3,6 @@ from aiogram.types.message import ContentTypes
 from loader import dp, bot, PAYMENTS_PROVIDER_TOKEN
 from aiogram.dispatcher.filters import Text
 
-# ТЕСТОВЫЙ
-# ХЕНДЛЕТ
-# НЕ
-# ЗАБУДЬ
-# УДАЛИТЬ
-# @dp.message_handler(commands='test')
-# async def alarm(message: types.Message):
-#     print(type(ADMINS)), print(type(message.from_user.id))
-
-
 # Цена за товар
 prices = [
     types.LabeledPrice(label='Working Time Machine', amount=5750),
@@ -25,21 +15,8 @@ shipping_options = [
 ]
 
 
-@dp.message_handler(commands=['terms'])
-async def cmd_terms(message: types.Message):
-    await bot.send_message(message.chat.id,
-                           'Thank you for shopping with our demo bot. We hope you like your new time machine!\n'
-                           '1. If your time machine was not delivered on time, please rethink your concept of time'
-                           ' and try again.\n'
-                           '2. If you find that your time machine is not working, kindly contact our future service'
-                           ' workshops on Trappist-1e. They will be accessible anywhere between'
-                           ' May 2075 and November 4000 C.E.\n'
-                           '3. If you would like a refund, kindly apply for one yesterday and we will have sent it'
-                           ' to you immediately.')
-
-
 # @dp.callback_query_handler(Text(startswith='buy '))
-@dp.callback_query_handler(text='buy')
+@dp.message_handler(text='🛒 Cart')
 async def buy_cpu(message: types.Message):
     await bot.send_message(message.chat.id,
                            "Не использовать реальную карту!\n"
@@ -87,7 +64,6 @@ async def checkout(pre_checkout_query: types.PreCheckoutQuery):
 async def got_payment(message: types.Message):
     await bot.send_message(message.chat.id,
                            'Ура! Спасибо за оплату! Мы обработаем ваш заказ на `{} {}`'
-                           ' как можно быстрее! Оставайтесь на связи.'
-                           '\n\nИспользуйте /buy еще раз, чтобы получить Машину времени для вашего друга!'.format(
+                           ' как можно быстрее! Оставайтесь на связи.'.format(
                                message.successful_payment.total_amount / 100, message.successful_payment.currency),
                            parse_mode='Markdown')
