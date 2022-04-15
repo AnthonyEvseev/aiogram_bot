@@ -1,7 +1,7 @@
 from aiogram import types
 from aiogram.types.message import ContentTypes
 from loader import dp, bot, PAYMENTS_PROVIDER_TOKEN
-from keyboards.inline_keyboards.menu_inline import menu
+from aiogram.dispatcher.filters import Text
 
 # ТЕСТОВЫЙ
 # ХЕНДЛЕТ
@@ -25,37 +25,21 @@ shipping_options = [
 ]
 
 
-# Отлавливает нажатие на кнопку "🛒 Store"
-@dp.message_handler(text="🛒 Basket")
-async def button_store(message: types.Message):
-    await message.answer(text="🛒 Choose a product category!", reply_markup=menu)
-
-
-# Отлавливает нажатие на кнопку "❗ Info"
-@dp.message_handler(text="❗ Info")
-async def button_info(message: types.Message):
+@dp.message_handler(commands=['terms'])
+async def cmd_terms(message: types.Message):
     await bot.send_message(message.chat.id,
-                           "Hellow, Я TonyTestBot 🚀\n"
-                           "Для друзей просто Tony 😏\n\n"
-                           'После нажатия на кнопку "Store"\n'
-                           'откроется интернет магазин,\n'
-                           'где ты сможешь сделать заказ 🛒\n\n'
-                           "Я пока не закончен, но скоро всё будет 🔥")
+                           'Thank you for shopping with our demo bot. We hope you like your new time machine!\n'
+                           '1. If your time machine was not delivered on time, please rethink your concept of time'
+                           ' and try again.\n'
+                           '2. If you find that your time machine is not working, kindly contact our future service'
+                           ' workshops on Trappist-1e. They will be accessible anywhere between'
+                           ' May 2075 and November 4000 C.E.\n'
+                           '3. If you would like a refund, kindly apply for one yesterday and we will have sent it'
+                           ' to you immediately.')
 
 
-# @dp.message_handler(commands=['terms'])
-# async def cmd_terms(message: types.Message):
-#     await bot.send_message(message.chat.id,
-#                            'Thank you for shopping with our demo bot. We hope you like your new time machine!\n'
-#                            '1. If your time machine was not delivered on time, please rethink your concept of time'
-#                            ' and try again.\n'
-#                            '2. If you find that your time machine is not working, kindly contact our future service'
-#                            ' workshops on Trappist-1e. They will be accessible anywhere between'
-#                            ' May 2075 and November 4000 C.E.\n'
-#                            '3. If you would like a refund, kindly apply for one yesterday and we will have sent it'
-#                            ' to you immediately.')
-
-@dp.message_handler(commands="buy")
+# @dp.callback_query_handler(Text(startswith='buy '))
+@dp.callback_query_handler(text='buy')
 async def buy_cpu(message: types.Message):
     await bot.send_message(message.chat.id,
                            "Не использовать реальную карту!\n"
