@@ -1,5 +1,4 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from handlers.callback_handlers.menu_callback import COUNTER_ITEM
 
 minus = InlineKeyboardMarkup(text='➖',
                              callback_data="➖")
