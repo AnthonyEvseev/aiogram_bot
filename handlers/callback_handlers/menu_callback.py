@@ -2,11 +2,11 @@ from aiogram import types
 from loader import dp
 from data_base import sql_admin
 from aiogram.dispatcher.filters import Text
-from aiogram.types import InlineKeyboardMarkup
 from keyboards.inline_keyboards.inline_gpu import gpu_menu
 from keyboards.inline_keyboards.inline_cpu import cpu_menu
 
 COUNTER_ITEM = 0
+
 
 @dp.callback_query_handler(Text(startswith='delete '))
 async def callback_delete(callback: types.CallbackQuery):
@@ -21,6 +21,7 @@ async def button_store(callback: types.CallbackQuery):
     global COUNTER_ITEM
     COUNTER_ITEM -= COUNTER_ITEM
     await callback.answer()
+
 
 # надо придумать как записать эти даннвые
 @dp.callback_query_handler(text="➕")
