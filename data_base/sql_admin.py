@@ -1,5 +1,6 @@
-from loader import bot
 import sqlite3 as sq
+from loader import bot
+from aiogram import types
 
 
 async def sql_create_db():
@@ -39,8 +40,7 @@ async def sql_delete_item_store_menu(data):
     return cur.execute('DELETE FROM store_menu WHERE name == ?', (data,)), base.commit()
 
 
-# Вывод меню на главной странице
-async def sql_output_store_menu(message):
+async def sql_output_store_menu(message: types.Message):
     for ret in cur.execute('SELECT * FROM store_menu').fetchall():
         await bot.send_photo(message.from_user.id, ret[5], f'Название товара: {ret[1]}\n'
                                                            f'Описание: {ret[2]}\nЦена: {ret[3]} ₽\n')
