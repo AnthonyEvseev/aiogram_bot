@@ -5,7 +5,6 @@ from loader import dp, bot
 from aiogram.dispatcher.filters import Text
 from data_base import sql_admin
 from configs.config import ADMINS
-from keyboards.delete_item_admin import delete_item
 
 
 # По команде "add" админ добавляет товар в базу бота
