@@ -2,7 +2,7 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
 button_buy = KeyboardButton('🍴 Menu')
 button_subscribe = KeyboardButton('♡ Subscribe')
-button_base = KeyboardButton('🛒 Basket')
+button_base = KeyboardButton('🛒 Cart')
 button_info = KeyboardButton('❗ Info')
 
 mane_menu = ReplyKeyboardMarkup(resize_keyboard=True, input_field_placeholder="")
