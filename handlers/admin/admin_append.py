@@ -116,13 +116,3 @@ async def load_name(message: types.Message, state: FSMContext):
         else:
             await state.finish()
             await bot.send_message(message.chat.id, "У Вас нет прав администратора")
-
-
-@dp.message_handler(text='🗑️ Delete')
-async def del_item(message: types.Message):
-    for admin in ADMINS:
-        if message.from_user.id == int(admin):
-            read = await sql_admin.sql_read_store_menu()
-            for ret in read:
-                await bot.send_photo(message.from_user.id, ret[5],
-                                     f"Название товара: {ret[1]}", reply_markup=delete_item)
