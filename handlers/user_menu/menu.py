@@ -31,3 +31,10 @@ async def update_post(query: types.CallbackQuery):
     current_amount = query.data.split('_')[-1]
     await bot.edit_message_reply_markup(query.message.chat.id, query.message.message_id,
                                         reply_markup=generate_kb(current_amount))
+
+
+@dp.callback_query_handler(filters.Regexp(regexp='^cart_add'))
+async def cart_add(query: types.CallbackQuery):
+    current_amount = query.data.split('_')[-1]
+    await bot.edit_message_reply_markup(query.message.chat.id, query.message.message_id,
+                                        reply_markup=generate_kb(current_amount))
