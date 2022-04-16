@@ -11,15 +11,15 @@ async def sql_create_db():
         print('Data base connected OK!')
     # SQL запрос на создание таблицы 'store_memu'
     base.execute('CREATE TABLE IF NOT EXISTS store_menu(item_id INTEGER PRIMARY KEY,name TEXT, '
-                 'discription TEXT, price INTEGER, amount INTEGER, img_item TEXT)')
+                 'discription TEXT, price INTEGER, amount_item INTEGER, img_item TEXT)')
 
     # SQL запрос на создание таблицы 'check_admin'
     base.execute('CREATE TABLE IF NOT EXISTS shopping_cart(order_id INTEGER PRIMARY KEY, user_id INTEGER, '
-                 'item_id INTEGER, amount INTEGER, FOREIGN KEY (item_id) REFERENCES item_id (store_menu))')
+                 'item_id INTEGER, amount_item INTEGER, FOREIGN KEY (item_id) REFERENCES item_id (store_menu))')
 
     # SQL запрос на создание таблицы 'order_history'
     base.execute('CREATE TABLE IF NOT EXISTS order_history(order_id INTEGER PRIMARY KEY, user_id INTEGER, '
-                 'item_id INTEGER, amount INTEGER, FOREIGN KEY (item_id) REFERENCES item_id (store_menu))')
+                 'item_id INTEGER, amount_item INTEGER, FOREIGN KEY (item_id) REFERENCES item_id (store_menu))')
     base.commit()
 
 
