@@ -13,11 +13,12 @@ async def update_counter(callback: types.CallbackQuery):
                                         reply_markup=generate_kb(current_amount))
 
 
-# # Отлавливает "Добавить в корзину" из "Menu"
-# @dp.callback_query_handler(filters.Regexp(regexp='^cart_add'))
-# async def cart_add(callback: types.CallbackQuery):
-#     current_amount = callback.data.split('_')[-1]
-    # await
+# Отлавливает "Добавить в корзину" из "Menu"
+@dp.callback_query_handler(filters.Regexp(regexp='^cart_add_'))
+async def cart_add(callback: types.CallbackQuery):
+    current_amount = callback.data.split('_')[-1]
+    await sql_admin.sql_cart_add(current_amount)
+
 
 # Отлавливает "delete" из меню администратора
 @dp.callback_query_handler(Text(startswith='delete '))
