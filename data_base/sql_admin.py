@@ -39,10 +39,13 @@ async def sql_read_store_menu():
     return cur.execute('SELECT * FROM store_menu').fetchall()
 
 
+async def sql_cart_add(current_amount):
+    pass
+    # async with state.proxy() as data:
+    #     cur.execute('INSERT INTO store_menu VALUES ( NULL, ?, ?, ?, ?)', tuple(data.values()))
+    #     base.commit()
+
+
 # Запрос на удалиение
 async def sql_delete_item_store_menu(data):
     return cur.execute('DELETE FROM store_menu WHERE name == ?', (data,)), base.commit()
-
-
-async def sql_output_store_menu():
-    pass
