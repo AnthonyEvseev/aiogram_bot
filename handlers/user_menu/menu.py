@@ -24,17 +24,3 @@ async def button_base(message: types.Message):
     for ret in read_db:
         await bot.send_photo(message.from_user.id, ret[5],
                              f'{ret[1]}\n{ret[2]}\nЦена: {ret[3]}₽', reply_markup=kb)
-
-
-@dp.callback_query_handler(filters.Regexp(regexp='^counter_'))
-async def update_post(query: types.CallbackQuery):
-    current_amount = query.data.split('_')[-1]
-    await bot.edit_message_reply_markup(query.message.chat.id, query.message.message_id,
-                                        reply_markup=generate_kb(current_amount))
-
-
-@dp.callback_query_handler(filters.Regexp(regexp='^cart_add'))
-async def cart_add(query: types.CallbackQuery):
-    current_amount = query.data.split('_')[-1]
-    await bot.edit_message_reply_markup(query.message.chat.id, query.message.message_id,
-                                        reply_markup=generate_kb(current_amount))
