@@ -7,16 +7,17 @@ from handlers.user_menu.menu import generate_kb
 
 # Отлавливает " - " и  " + " из "Menu"
 @dp.callback_query_handler(filters.Regexp(regexp='^counter_'))
-async def update_counter(query: types.CallbackQuery):
-    current_amount = query.data.split('_')[-1]
-    await bot.edit_message_reply_markup(query.message.chat.id, query.message.message_id,
+async def update_counter(callback: types.CallbackQuery):
+    current_amount = callback.data.split('_')[-1]
+    await bot.edit_message_reply_markup(callback.message.chat.id, callback.message.message_id,
                                         reply_markup=generate_kb(current_amount))
 
 
-# Отлавливает "Добавить в корзину" из "Menu"
-@dp.callback_query_handler(filters.Regexp(regexp='^cart_add'))
-async def cart_add(query: types.CallbackQuery):
-    pass
+# # Отлавливает "Добавить в корзину" из "Menu"
+# @dp.callback_query_handler(filters.Regexp(regexp='^cart_add'))
+# async def cart_add(callback: types.CallbackQuery):
+#     current_amount = callback.data.split('_')[-1]
+    # await
 
 # Отлавливает "delete" из меню администратора
 @dp.callback_query_handler(Text(startswith='delete '))

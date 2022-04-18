@@ -14,7 +14,6 @@ class Store_items(StatesGroup):
     name = State()
     discription = State()
     price = State()
-    amount = State()
     img_item = State()
 
 
@@ -76,24 +75,6 @@ async def load_price(message: types.Message, state: FSMContext):
         if message.from_user.id == int(admin):
             async with state.proxy() as data:
                 data['price'] = message.text
-            await Store_items.next()
-            await message.reply('Введите количество товара на складе')
-        else:
-            await state.finish()
-            await bot.send_message(message.chat.id, "У Вас нет прав администратора")
-
-
-@dp.message_handler(lambda message: not message.text.isdigit(), state=Store_items.amount)
-async def process_load_load_amount_invalid(message: types.Message):
-    return await message.reply("Колличество товара должна быть числом.\nВведите, пожалуйста, число")
-
-
-@dp.message_handler(state=Store_items.amount)
-async def load_amount(message: types.Message, state: FSMContext):
-    for admin in ADMINS:
-        if message.from_user.id == int(admin):
-            async with state.proxy() as data:
-                data['amount'] = message.text
             await Store_items.next()
             await message.reply('Добавьте изображение\n\n'
                                 'Обязательно поставьте галочку\n'
