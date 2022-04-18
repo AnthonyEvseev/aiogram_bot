@@ -9,7 +9,7 @@ async def sql_create_db():
     cur = base.cursor()
     if base:
         print('Data base connected OK!')
-    # SQL запрос на создание таблицы 'store_memu'
+    # SQL запрос на создание таблицы 'store_menu'
     base.execute('CREATE TABLE IF NOT EXISTS store_menu(item_id INTEGER PRIMARY KEY,name TEXT, '
                  'discription TEXT, price INTEGER, amount_item INTEGER, img_item TEXT)')
 
