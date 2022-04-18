@@ -11,7 +11,7 @@ def generate_kb(current_amount):
         types.InlineKeyboardButton('-', callback_data='counter_{}'.format(current_amount - 1)),
         types.InlineKeyboardButton('{} шт'.format(current_amount), callback_data='empty?'),
         types.InlineKeyboardButton('+', callback_data='counter_{}'.format(current_amount + 1)),
-        types.InlineKeyboardButton('Добавить в корзину', callback_data='cart_add'),
+        types.InlineKeyboardButton('Добавить в корзину', callback_data='cart_add_{}'.format(current_amount)),
     )
 
     return keyboard_markup
