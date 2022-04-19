@@ -1,8 +1,8 @@
 from aiogram import types, filters
+from handlers.user_menu.menu import generate_kb
 from loader import dp, bot
 from data_base import sql_admin
 from aiogram.dispatcher.filters import Text
-from handlers.user_menu.menu import generate_kb
 
 
 # Отлавливает " - " и  " + " из "Menu"
@@ -13,11 +13,11 @@ async def update_counter(callback: types.CallbackQuery):
                                         reply_markup=generate_kb(current_amount))
 
 
-# Отлавливает "Добавить в корзину" из "Menu"
-@dp.callback_query_handler(filters.Regexp(regexp='^cart_add_'))
-async def cart_add(callback: types.CallbackQuery):
-    current_amount = callback.data.split('_')[-1]
-    await sql_admin.sql_cart_add(current_amount)
+# # Отлавливает "Добавить в корзину" из "Menu"
+# @dp.callback_query_handler(Text(startswith='cart_add_'))
+# async def cart_add(callback: types.CallbackQuery):
+#     current_amount = callback.data.split('_')[-1]
+#     await sql_admin.sql_cart_add(current_amount)
 
 
 # Отлавливает "delete" из меню администратора
