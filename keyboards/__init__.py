@@ -1,2 +1,2 @@
-from . import keyboards
-from . import inline_keyboards
+from . import keyboards_admin
+from . import keyboards_mane

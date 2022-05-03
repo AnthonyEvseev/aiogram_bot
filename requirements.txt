@@ -1,2 +1,5 @@
 aiogram<3.0
 environs~=8.0.0
+sqlalchemy<=1.4.35
+gino==0.8.3
+

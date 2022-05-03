@@ -7,4 +7,3 @@ button_info = KeyboardButton('❗ Info')
 
 mane_menu = ReplyKeyboardMarkup(resize_keyboard=True, input_field_placeholder="")
 mane_menu.add(button_buy, button_subscribe).add(button_base, button_info)
-

@@ -3,7 +3,7 @@ from loader import dp
 import handlers
 from utils.notify_admins import on_startup_notify
 from utils.set_bot_commands import set_default_commands
-from data_base import sql_admin
+from data_base import data_base
 
 
 async def on_startup(dispatcher):
@@ -14,7 +14,7 @@ async def on_startup(dispatcher):
     await on_startup_notify(dispatcher)
 
     # Включает базу данных
-    await sql_admin.sql_create_db()
+    await data_base.create_db()
 
 
 if __name__ == '__main__':
