@@ -1,7 +1,7 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.callback_data import CallbackData
 
-from data_base.data_commands import get_subcategories, count_items, get_items, get_categories
+from data_base.data_commands import get_subcategories, count_items, get_items, get_categories_code
 
 # Создаем CallbackData-объекты, которые будут нужны для работы с менюшкой
 menu_cd = CallbackData("show_menu", "level", "category", "subcategory", "item_id")
@@ -23,11 +23,8 @@ async def categories_keyboard():
     markup = InlineKeyboardMarkup()
 
     # Забираем список товаров из базы данных с РАЗНЫМИ категориями и проходим по нему
-    categories = await get_categories()
+    categories = await get_categories_code()
     for category in categories:
-        # Чекаем в базе сколько товаров существует под данной категорией
-        number_of_items = await count_items(category.category_code)
-
         # Сформируем текст, который будет на кнопке
         button_text = f"0 ЛВЛ {category.category_code}"
         # button_text = f"{category.category_name} ({number_of_items} шт)"
@@ -126,4 +123,3 @@ def item_keyboard(category, subcategory, item_id):
                                              category=category, subcategory=subcategory))
     )
     return markup
-

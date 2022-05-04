@@ -13,7 +13,7 @@ async def add_item(**kwargs):
 
 
 # Функция для вывода товаров с РАЗНЫМИ категориями
-async def get_categories() -> List[Item]:
+async def get_categories_code() -> List[Item]:
     return await Item.query.distinct(Item.category_code).gino.all()
 
 
