@@ -1,6 +1,8 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery, PreCheckoutQuery, Message
+from time import sleep
+from data_base.data_commands import get_item
 from keyboards.keyboards_admin import mane_admin
 import data_base.data_base
 from configs.config import ADMINS, PAYMENTS_PROVIDER_TOKEN
@@ -8,7 +10,8 @@ from loader import dp, bot
 from handlers.admin_menu.states import Purchase
 import datetime
 from keyboards.keyboards_mane import mane_menu
-from handlers.admin_menu.callback import categories_keyboard
+from handlers.admin_menu.callback import categories_keyboard, subcategories_keyboard, items_keyboard, item_keyboard, \
+    menu_cd
 from data_base import data_base
 from aiogram.utils.callback_data import CallbackData
 from typing import Union
@@ -26,9 +29,10 @@ async def bot_start(message: types.Message):
                  'Чтобы добавить войти в режим админа введи /mod')
     await message.answer(text, reply_markup=mane_menu)
 
+
 @dp.message_handler(text='🍴 Menu')
 async def show_items(message: types.Message):
-    await mane_panel(message)
+    await list_categories(message)
 
 
 @dp.message_handler(commands="mod")
@@ -46,7 +50,7 @@ async def cansel(message: types.Message, state: FSMContext):
     await state.reset_state()
 
 
-async def mane_panel(message: Union[CallbackQuery, Message], **kwargs):
+async def list_categories(message: Union[CallbackQuery, Message], **kwargs):
     # Клавиатуру формируем с помощью следующей функции (где делается запрос в базу данных)
 
     markup = await categories_keyboard()
@@ -61,27 +65,49 @@ async def mane_panel(message: Union[CallbackQuery, Message], **kwargs):
         await call.message.edit_reply_markup(markup)
 
 
-# Это будет финальное меню
+async def list_subcategories(callback: CallbackQuery, category, **kwargs):
+    markup = await subcategories_keyboard(category)
+    await callback.message.edit_reply_markup(markup)
 
-# @dp.message_handler(text='🍴 Menu')
-# async def show_items(message: types.Message):
-#     all_item = await db.show_items()
-#     text = ('{name}\n\n'
-#             '{description}\n\n'
-#             'Цена: {price}₽\n')
-#     for item in all_item:
-#         markup = types.InlineKeyboardMarkup()
-#         markup.add(
-#             types.InlineKeyboardButton('Купить', callback_data=buy_item.new(item_id=item.id))
-#         )
-#
-#         await message.answer_photo(
-#             photo=item.photo,
-#             caption=text.format(name=item.name,
-#                                 description=item.description,
-#                                 price=item.price).title(),
-#             reply_markup=markup
-#         )
+
+async def list_items(callback: CallbackQuery, category, subcategory, **kwargs):
+    markup = await items_keyboard(category, subcategory)
+    await callback.message.edit_text(text="Смотри, что у нас есть", reply_markup=markup)
+
+
+# Функция, которая отдает уже кнопку Купить товар по выбранному товару
+async def show_item(callback: CallbackQuery, category, subcategory, item_id):
+    markup = item_keyboard(category, subcategory, item_id)
+
+    # Берем запись о нашем товаре из базы данных
+    item = await get_item(item_id)
+    text = f"Купи {item.name}"
+    await callback.message.edit_text(text=text, reply_markup=markup)
+
+
+####################################
+
+@dp.message_handler(text='🍴 Menu')
+async def show_items(message: types.Message):
+    all_item = await db.show_items()
+    text = ('{name}\n\n'
+            '{description}\n\n'
+            'Цена: {price}₽\n')
+    for item in all_item:
+        markup = types.InlineKeyboardMarkup()
+        markup.add(
+            types.InlineKeyboardButton('Купить', callback_data=buy_item.new(item_id=item.id))
+        )
+
+        await message.answer_photo(
+            photo=item.photo,
+            caption=text.format(name=item.name,
+                                description=item.description,
+                                price=item.price).title(),
+            reply_markup=markup
+        )
+################################
+
 
 @dp.callback_query_handler(buy_item.filter())
 async def buying_item(callback: CallbackQuery, callback_data: dict, state: FSMContext):
@@ -157,10 +183,7 @@ async def agree_purchase(callback: CallbackQuery, state: FSMContext):
     prices = [
         types.LabeledPrice(label=item.name, amount=purchase.amount * 100),
     ]
-    # prices = [
-    #     types.LabeledPrice(label='Working Time Machine', amount=5750),
-    #     types.LabeledPrice(label='Gift wrapping', amount=500),
-    # ]
+
     await purchase.create()
     await callback.message.answer("Не использовать реальную карту!\n"
                                   "Don't use real card!\n\n"
@@ -209,3 +232,43 @@ async def checkout(quary: PreCheckoutQuery, state: FSMContext):
 
 async def check_payment(purchase: data_base.Purchase):
     return True
+
+
+# Функция, которая обрабатывает ВСЕ нажатия на кнопки в этой менюшке
+@dp.callback_query_handler(menu_cd.filter())
+async def navigate(call: CallbackQuery, callback_data: dict):
+    """
+    :param call: Тип объекта CallbackQuery, который прилетает в хендлер
+    :param callback_data: Словарь с данными, которые хранятся в нажатой кнопке
+    """
+
+    # Получаем текущий уровень меню, который запросил пользователь
+    current_level = callback_data.get("level")
+
+    # Получаем категорию, которую выбрал пользователь (Передается всегда)
+    category = callback_data.get("category")
+
+    # Получаем подкатегорию, которую выбрал пользователь (Передается НЕ ВСЕГДА - может быть 0)
+    subcategory = callback_data.get("subcategory")
+
+    # Получаем айди товара, который выбрал пользователь (Передается НЕ ВСЕГДА - может быть 0)
+    item_id = int(callback_data.get("item_id"))
+
+    # Прописываем "уровни" в которых будут отправляться новые кнопки пользователю
+    levels = {
+        "0": list_categories,  # Отдаем категории
+        "1": list_subcategories,  # Отдаем подкатегории
+        "2": list_items,  # Отдаем товары
+        "3": show_item  # Предлагаем купить товар
+    }
+
+    # Забираем нужную функцию для выбранного уровня
+    current_level_function = levels[current_level]
+
+    # Выполняем нужную функцию и передаем туда параметры, полученные из кнопки
+    await current_level_function(
+        call,
+        category=category,
+        subcategory=subcategory,
+        item_id=item_id
+    )
