@@ -28,7 +28,7 @@ async def append_name(message: types.Message):
 async def append_description(message: types.Message, state: FSMContext):
     name = message.text
     item = data_base.Item()
-    item.name = name
+    item.name = name.title()
     await message.answer('Введите описание товара или нажмите /cansel')
     await NewItem.description.set()
     await state.update_data(item=item)
@@ -39,7 +39,7 @@ async def append_description(message: types.Message, state: FSMContext):
     data = await state.get_data()
     description = message.text
     item: data_base.Item = data.get('item')
-    item.description = description
+    item.description = description.title()
     await message.answer('Введите фотографию товара или нажмите /cansel')
     await NewItem.photo.set()
     await state.update_data(item=item)

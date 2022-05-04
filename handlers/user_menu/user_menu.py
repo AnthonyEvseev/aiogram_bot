@@ -8,7 +8,7 @@ from loader import dp, bot
 from handlers.admin_menu.states import Purchase
 import datetime
 from keyboards.keyboards_mane import mane_menu
-from keyboards.inline import categories_keyboard
+from handlers.admin_menu.callback import categories_keyboard
 from data_base import data_base
 from aiogram.utils.callback_data import CallbackData
 from typing import Union
@@ -20,6 +20,14 @@ buy_item = CallbackData("buy", "item_id")
 
 @dp.message_handler(commands='start')
 async def bot_start(message: types.Message):
+    text = f"Привет, {message.from_user.full_name}!"
+    if message.from_user.id == int(ADMINS):
+        text += ('\n'
+                 'Чтобы добавить войти в режим админа введи /mod')
+    await message.answer(text, reply_markup=mane_menu)
+
+@dp.message_handler(text='🍴 Menu')
+async def show_items(message: types.Message):
     await mane_panel(message)
 
 
@@ -41,41 +49,39 @@ async def cansel(message: types.Message, state: FSMContext):
 async def mane_panel(message: Union[CallbackQuery, Message], **kwargs):
     # Клавиатуру формируем с помощью следующей функции (где делается запрос в базу данных)
 
-    # markup = await categories_keyboard()
+    markup = await categories_keyboard()
 
-    text = f"Привет, {message.from_user.full_name}!"
-    if message.from_user.id == int(ADMINS):
-        text += ('\n'
-                 'Чтобы добавить войти в режим админа введи /mod')
+    text = f"Что же захочет купить {message.from_user.full_name} 😏 ?"
 
     if isinstance(message, Message):
-        await message.answer(text, reply_markup=mane_menu)
+        await message.answer(text, reply_markup=markup)
 
     elif isinstance(message, CallbackQuery):
         call = message
-        await call.message.edit_reply_markup(mane_menu)
+        await call.message.edit_reply_markup(markup)
 
 
-@dp.message_handler(text='🍴 Menu')
-async def show_items(message: types.Message):
-    all_item = await db.show_items()
-    text = ('{name}\n\n'
-            '{description}\n\n'
-            'Цена: {price}₽\n')
-    for item in all_item:
-        markup = types.InlineKeyboardMarkup()
-        markup.add(
-            types.InlineKeyboardButton('Купить', callback_data=buy_item.new(item_id=item.id))
-        )
+# Это будет финальное меню
 
-        await message.answer_photo(
-            photo=item.photo,
-            caption=text.format(name=item.name,
-                                description=item.description,
-                                price=item.price).title(),
-            reply_markup=markup
-        )
-
+# @dp.message_handler(text='🍴 Menu')
+# async def show_items(message: types.Message):
+#     all_item = await db.show_items()
+#     text = ('{name}\n\n'
+#             '{description}\n\n'
+#             'Цена: {price}₽\n')
+#     for item in all_item:
+#         markup = types.InlineKeyboardMarkup()
+#         markup.add(
+#             types.InlineKeyboardButton('Купить', callback_data=buy_item.new(item_id=item.id))
+#         )
+#
+#         await message.answer_photo(
+#             photo=item.photo,
+#             caption=text.format(name=item.name,
+#                                 description=item.description,
+#                                 price=item.price).title(),
+#             reply_markup=markup
+#         )
 
 @dp.callback_query_handler(buy_item.filter())
 async def buying_item(callback: CallbackQuery, callback_data: dict, state: FSMContext):
