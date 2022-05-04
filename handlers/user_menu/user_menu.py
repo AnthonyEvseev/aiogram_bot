@@ -4,22 +4,17 @@ from aiogram.types import CallbackQuery, PreCheckoutQuery, Message
 from time import sleep
 from data_base.data_commands import get_item
 from keyboards.keyboards_admin import mane_admin
-import data_base.data_base
 from configs.config import ADMINS, PAYMENTS_PROVIDER_TOKEN
 from loader import dp, bot
 from handlers.admin_menu.states import Purchase
 import datetime
 from keyboards.keyboards_mane import mane_menu
 from handlers.admin_menu.callback import categories_keyboard, subcategories_keyboard, items_keyboard, item_keyboard, \
-    menu_cd
+    menu_cd, buy_item
 from data_base import data_base
-from aiogram.utils.callback_data import CallbackData
 from typing import Union
 
 db = data_base.DBCommands()
-
-buy_item = CallbackData("buy", "item_id")
-
 
 @dp.message_handler(commands='start')
 async def bot_start(message: types.Message):
@@ -87,25 +82,25 @@ async def show_item(callback: CallbackQuery, category, subcategory, item_id):
 
 ####################################
 
-@dp.message_handler(text='🍴 Menu')
-async def show_items(message: types.Message):
-    all_item = await db.show_items()
-    text = ('{name}\n\n'
-            '{description}\n\n'
-            'Цена: {price}₽\n')
-    for item in all_item:
-        markup = types.InlineKeyboardMarkup()
-        markup.add(
-            types.InlineKeyboardButton('Купить', callback_data=buy_item.new(item_id=item.id))
-        )
-
-        await message.answer_photo(
-            photo=item.photo,
-            caption=text.format(name=item.name,
-                                description=item.description,
-                                price=item.price).title(),
-            reply_markup=markup
-        )
+# @dp.message_handler(text='🍴 Menu')
+# async def show_items(message: types.Message):
+#     all_item = await db.show_items()
+#     text = ('{name}\n\n'
+#             '{description}\n\n'
+#             'Цена: {price}₽\n')
+#     for item in all_item:
+#         markup = types.InlineKeyboardMarkup()
+#         markup.add(
+#             types.InlineKeyboardButton('Купить', callback_data=buy_item.new(item_id=item.id))
+#         )
+#
+#         await message.answer_photo(
+#             photo=item.photo,
+#             caption=text.format(name=item.name,
+#                                 description=item.description,
+#                                 price=item.price).title(),
+#             reply_markup=markup
+#         )
 ################################
 
 

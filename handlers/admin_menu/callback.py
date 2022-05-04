@@ -29,7 +29,8 @@ async def categories_keyboard():
         number_of_items = await count_items(category.category_code)
 
         # Сформируем текст, который будет на кнопке
-        button_text = f"{category.category_name} ({number_of_items} шт)"
+        button_text = f"0 ЛВЛ {category.category_code}"
+        # button_text = f"{category.category_name} ({number_of_items} шт)"
 
         # Сформируем колбек дату, которая будет на кнопке. Следующий уровень - текущий + 1, и перечисляем категории
         callback_data = make_callback_data(level=CURRENT_LEVEL + 1, category=category.category_code)
@@ -56,7 +57,7 @@ async def subcategories_keyboard(category):
         number_of_items = await count_items(category_code=category, subcategory_code=subcategory.subcategory_code)
 
         # Сформируем текст, который будет на кнопке
-        button_text = f"{subcategory.subcategory_name} ({number_of_items} шт)"
+        button_text = f"1_лвл {subcategory.subcategory_name} ({number_of_items} шт)"
 
         # Сформируем колбек дату, которая будет на кнопке
         callback_data = make_callback_data(level=CURRENT_LEVEL + 1,
