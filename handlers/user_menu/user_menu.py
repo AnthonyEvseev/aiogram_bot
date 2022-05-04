@@ -1,15 +1,17 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
-from aiogram.types import CallbackQuery, PreCheckoutQuery
+from aiogram.types import CallbackQuery, PreCheckoutQuery, Message
 from keyboards.keyboards_admin import mane_admin
 import data_base.data_base
 from configs.config import ADMINS, PAYMENTS_PROVIDER_TOKEN
 from loader import dp, bot
-from .states import Purchase
+from handlers.admin_menu.states import Purchase
 import datetime
 from keyboards.keyboards_mane import mane_menu
+from keyboards.inline import categories_keyboard
 from data_base import data_base
 from aiogram.utils.callback_data import CallbackData
+from typing import Union
 
 db = data_base.DBCommands()
 
@@ -18,11 +20,7 @@ buy_item = CallbackData("buy", "item_id")
 
 @dp.message_handler(commands='start')
 async def bot_start(message: types.Message):
-    text = f"Привет, {message.from_user.full_name}!"
-    if message.from_user.id == int(ADMINS):
-        text += ('\n'
-                 'Чтобы добавить войти в режим админа введи /mod')
-    await message.answer(text, reply_markup=mane_menu)
+    await mane_panel(message)
 
 
 @dp.message_handler(commands="mod")
@@ -38,6 +36,24 @@ async def make_changes_command(message: types.Message):
 async def cansel(message: types.Message, state: FSMContext):
     await message.answer('Вы отменили ввод')
     await state.reset_state()
+
+
+async def mane_panel(message: Union[CallbackQuery, Message], **kwargs):
+    # Клавиатуру формируем с помощью следующей функции (где делается запрос в базу данных)
+
+    # markup = await categories_keyboard()
+
+    text = f"Привет, {message.from_user.full_name}!"
+    if message.from_user.id == int(ADMINS):
+        text += ('\n'
+                 'Чтобы добавить войти в режим админа введи /mod')
+
+    if isinstance(message, Message):
+        await message.answer(text, reply_markup=mane_menu)
+
+    elif isinstance(message, CallbackQuery):
+        call = message
+        await call.message.edit_reply_markup(mane_menu)
 
 
 @dp.message_handler(text='🍴 Menu')
@@ -161,8 +177,8 @@ async def agree_purchase(callback: CallbackQuery, state: FSMContext):
                            photo_size=512,
                            is_flexible=True,  # True If you need to set up Shipping Fee
                            prices=prices,
-                           start_parameter='time-machine-example',
-                           payload='HAPPY FRIDAYS COUPON')
+                           start_parameter=item.name.title(),
+                           payload=item.name.title())
 
     await state.update_data(purchase=purchase)
     await Purchase.payment.set()

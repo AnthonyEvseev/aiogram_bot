@@ -2,7 +2,7 @@ from aiogram import types, Bot
 from gino import Gino
 from gino import schema
 from sqlalchemy import Column, Integer, BigInteger, String, Sequence, TIMESTAMP, BOOLEAN, JSON, sql
-from configs.config import BD_USER, BD_PASSWORD, HOST
+from configs.config import BD_USER, BD_PASSWORD, HOST, BD_NAME
 
 db = Gino()
 
@@ -21,10 +21,22 @@ class Item(db.Model):
     __tablename__ = "items"
     queue: sql.Select
     id = Column(Integer, Sequence('user_id_seq'), primary_key=True)
+    category_code = Column(String(20))
+    category_name = Column(String(50))
+
+    subcategory_code = Column(String(20))
+    subcategory_name = Column(String(50))
+
     name = Column(String(50))
     photo = Column(String(250))
     description = Column(String(400))
     price = Column(Integer)
+
+    def __repr__(self):
+        return f"""
+Товар №{self.id} - {self.name}
+Цена: {self.price}
+"""
 
 
 class Purchase(db.Model):
@@ -81,7 +93,6 @@ class DBCommands:
 
 
 async def create_db():
-    await db.set_bind(f'postgresql://{BD_USER}:{BD_PASSWORD}@{HOST}/postgres')
+    await db.set_bind(f'postgresql://{BD_USER}:{BD_PASSWORD}@{HOST}/{BD_NAME}')
     db.gino: schema.GinoSchemaVisitor
-    # await db.gino.drop_all()
     await db.gino.create_all()

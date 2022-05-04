@@ -4,10 +4,10 @@ from environs import Env
 env = Env()
 env.read_env()
 
-BOT_TOKEN = env.str("BOT_TOKEN")  # Забираем значение типа str
-ADMINS = env.str("ADMINS")  # Тут у нас будет список из админов
-IP = env.str("IP")  # Тоже str, но для айпи адреса хоста
-PAYMENTS_PROVIDER_TOKEN = env.str("PAYMENTS_PROVIDER_TOKEN")  # Тестовая оплата Сбербанк
+BOT_TOKEN = env.str("BOT_TOKEN")
+ADMINS = env.str("ADMINS")
+IP = env.str("IP")
+PAYMENTS_PROVIDER_TOKEN = env.str("PAYMENTS_PROVIDER_TOKEN")
 
 BD_USER = env.str('BD_USER')
 BD_PASSWORD = env.str('BD_PASSWORD')
