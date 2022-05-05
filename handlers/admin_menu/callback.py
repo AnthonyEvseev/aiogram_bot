@@ -26,7 +26,7 @@ async def categories_keyboard():
     categories = await get_categories()
     for category in categories:
         # Чекаем в базе сколько товаров существует под данной категорией
-        number_of_items = await count_items(category.category_code)
+        number_of_items = await count_items(category.category_name)
 
         # Сформируем текст, который будет на кнопке
 
@@ -34,7 +34,7 @@ async def categories_keyboard():
 
 
         # Сформируем колбек дату, которая будет на кнопке. Следующий уровень - текущий + 1, и перечисляем категории
-        callback_data = make_callback_data(level=CURRENT_LEVEL + 1, category=category.category_code)
+        callback_data = make_callback_data(level=CURRENT_LEVEL + 1, category=category.category_name)
 
         # Вставляем кнопку в клавиатуру
         markup.insert(
@@ -55,14 +55,14 @@ async def subcategories_keyboard(category):
     subcategories = await get_subcategories(category)
     for subcategory in subcategories:
         # Чекаем в базе сколько товаров существует под данной подкатегорией
-        number_of_items = await count_items(category_code=category, subcategory_code=subcategory.subcategory_code)
+        number_of_items = await count_items(category_name=category, subcategory_name=subcategory.subcategory_name)
 
         # Сформируем текст, который будет на кнопке
         button_text = f"{subcategory.subcategory_name} ({number_of_items} шт)"
 
         # Сформируем колбек дату, которая будет на кнопке
         callback_data = make_callback_data(level=CURRENT_LEVEL + 1,
-                                           category=category, subcategory=subcategory.subcategory_code)
+                                           category=category, subcategory=subcategory.subcategory_name)
         markup.insert(
             InlineKeyboardButton(text=button_text, callback_data=callback_data)
         )

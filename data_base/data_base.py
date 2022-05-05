@@ -21,16 +21,8 @@ class Item(db.Model):
     __tablename__ = "items"
     queue: sql.Select
     id = Column(Integer, Sequence('user_id_seq'), primary_key=True)
-    # Код категории (для отображения в колбек дате)
-    category_code = Column(String(20))
-
-    category_name = Column(String(20))
-
-    # Код подкатегории (для отображения в колбек дате)
-    subcategory_code = Column(String(50))
-
+    category_name = Column(String(50))
     subcategory_name = Column(String(50))
-
     name = Column(String(50))
     photo = Column(String(250))
     description = Column(String(400))

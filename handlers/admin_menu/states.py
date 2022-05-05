@@ -2,6 +2,8 @@ from aiogram.dispatcher.filters.state import StatesGroup, State
 
 
 class NewItem(StatesGroup):
+    category_name = State()
+    subcategory_name = State()
     name = State()
     description = State()
     photo = State()

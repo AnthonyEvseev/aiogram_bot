@@ -20,14 +20,36 @@ async def make_changes_command(message: types.Message):
 
 @dp.message_handler(user_id=ADMINS, text="➕ Append")
 async def append_name(message: types.Message):
-    await message.answer('Введите название товара или нажмите /cansel')
+    await message.answer('Укажите категорию товара\nили нажмите /cansel')
+    await NewItem.category_name.set()
+
+
+@dp.message_handler(user_id=ADMINS, state=NewItem.category_name)
+async def append_description(message: types.Message, state: FSMContext):
+    category_name = message.text
+    item = data_base.Item()
+    item.category_name = category_name.title()
+    await message.answer('Введите подкатегорию товара\nили нажмите /cansel')
+    await NewItem.subcategory_name.set()
+    await state.update_data(item=item)
+
+
+@dp.message_handler(user_id=ADMINS, state=NewItem.subcategory_name)
+async def append_description(message: types.Message, state: FSMContext):
+    data = await state.get_data()
+    subcategory_name = message.text
+    item: data_base.Item = data.get('item')
+    item.subcategory_name = subcategory_name.title()
+    await message.answer('Укажите название товара\nили нажмите /cansel')
     await NewItem.name.set()
+    await state.update_data(item=item)
 
 
 @dp.message_handler(user_id=ADMINS, state=NewItem.name)
 async def append_description(message: types.Message, state: FSMContext):
+    data = await state.get_data()
     name = message.text
-    item = data_base.Item()
+    item: data_base.Item = data.get('item')
     item.name = name.title()
     await message.answer('Введите описание товара или нажмите /cansel')
     await NewItem.description.set()

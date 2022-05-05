@@ -19,17 +19,17 @@ async def get_categories() -> List[Item]:
 
 # Функция для вывода товаров с РАЗНЫМИ подкатегориями в выбранной категории
 async def get_subcategories(category) -> List[Item]:
-    return await Item.query.distinct(Item.subcategory_name).where(Item.category_code == category).gino.all()
+    return await Item.query.distinct(Item.subcategory_name).where(Item.category_name == category).gino.all()
 
 
 # Функция для подсчета товаров с выбранными категориями и подкатегориями
-async def count_items(category_code, subcategory_code=None):
+async def count_items(category_name, subcategory_name=None):
     # Прописываем условия для вывода (категория товара равняется выбранной категории)
-    conditions = [Item.category_code == category_code]
+    conditions = [Item.category_name == category_name]
 
     # Если передали подкатегорию, то добавляем ее в условие
-    if subcategory_code:
-        conditions.append(Item.subcategory_code == subcategory_code)
+    if subcategory_name:
+        conditions.append(Item.subcategory_name == subcategory_name)
 
     # Функция подсчета товаров с указанными условиями
     total = await db.select([db.func.count()]).where(
@@ -39,10 +39,10 @@ async def count_items(category_code, subcategory_code=None):
 
 
 # Функция вывода всех товаров, которые есть в переданных категории и подкатегории
-async def get_items(category_code, subcategory_code) -> List[Item]:
+async def get_items(category_name, subcategory_name) -> List[Item]:
     item = await Item.query.where(
-        and_(Item.category_code == category_code,
-             Item.subcategory_code == subcategory_code)
+        and_(Item.category_name == category_name,
+             Item.subcategory_name == subcategory_name)
     ).gino.all()
     return item
 
