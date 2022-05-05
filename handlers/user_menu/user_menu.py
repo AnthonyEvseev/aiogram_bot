@@ -16,6 +16,7 @@ from typing import Union
 
 db = data_base.DBCommands()
 
+
 @dp.message_handler(commands='start')
 async def bot_start(message: types.Message):
     text = f"Привет, {message.from_user.full_name}!"
@@ -30,7 +31,7 @@ async def show_items(message: types.Message):
     await list_categories(message)
     if message.from_user.id == int(ADMINS):
         text = ('\n'
-                 'Чтобы добавить войти в режим админа введи /admin_mod')
+                'Чтобы добавить войти в режим админа введи /admin_mod')
         await message.answer(text)
 
 
