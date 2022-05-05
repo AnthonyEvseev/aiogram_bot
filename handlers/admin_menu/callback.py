@@ -32,7 +32,6 @@ async def categories_keyboard():
 
         button_text = f"{category.category_name} ({number_of_items} шт)"
 
-
         # Сформируем колбек дату, которая будет на кнопке. Следующий уровень - текущий + 1, и перечисляем категории
         callback_data = make_callback_data(level=CURRENT_LEVEL + 1, category=category.category_name)
 
