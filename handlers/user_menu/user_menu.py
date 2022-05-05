@@ -29,10 +29,6 @@ async def bot_start(message: types.Message):
 @dp.message_handler(text='🍴 Menu')
 async def show_items(message: types.Message):
     await list_categories(message)
-    if message.from_user.id == int(ADMINS):
-        text = ('\n'
-                'Чтобы добавить войти в режим админа введи /admin_mod')
-        await message.answer(text)
 
 
 @dp.message_handler(commands="admin_mod")
