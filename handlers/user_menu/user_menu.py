@@ -250,8 +250,8 @@ async def navigate(call: CallbackQuery, callback_data: dict):
     # Прописываем "уровни" в которых будут отправляться новые кнопки пользователю
     levels = {
         "0": list_categories,  # Отдаем категории
-        "1": test_lel,  # Отдаем подкатегории
-        # "1": list_subcategories,  # Отдаем подкатегории
+        # "1": test_lel,  # Отдаем подкатегории
+        "1": list_subcategories,  # Отдаем подкатегории
         "2": list_items,  # Отдаем товары
         "3": show_item  # Предлагаем купить товар
     }
