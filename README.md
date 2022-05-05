@@ -6,7 +6,7 @@ Unfortunately, the bot is ready for 90% of the intended functionality.
 
 I did not come up with and did not find a solution to several questions.
 
-I'm ashamed to leave it in this state, but I spent more on it initially
+I had to leave the code in this state because I spent more on it initially
 scheduled time and I decided that I need to go and study further.
 
 As I gain new knowledge, I will return and complete this bot.
@@ -20,7 +20,7 @@ RU
 
 Я не придумал и не нашёл решение нескольких вопросов.
 
-Мне стыдно его оставлять в таком состоянии, но я на него потратил больше изначально
+Мне пришлось оставлить код в таком состоянии, потому что я потратил на него больше изначально
 запланированного времени и я принял решение, что мне нужно идти и учиться дальше.
 
 По мере получения новых знаний я вернусь и доделаю этого бота. 
