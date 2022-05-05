@@ -87,7 +87,7 @@ async def items_keyboard(category, subcategory):
     items = await get_items(category, subcategory)
     for item in items:
         # Сформируем текст, который будет на кнопке
-        button_text = f"{item.name} - {item.price}₽"
+        button_text = f"{item.name} - {item.price} ₽"
 
         # Сформируем колбек дату, которая будет на кнопке
         callback_data = make_callback_data(level=CURRENT_LEVEL + 1,
