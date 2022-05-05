@@ -1,7 +1,7 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.callback_data import CallbackData
 
-from data_base.data_commands import get_subcategories, count_items, get_items, get_categories_code
+from data_base.data_commands import get_subcategories, count_items, get_items, get_categories
 
 # Создаем CallbackData-объекты, которые будут нужны для работы с менюшкой
 menu_cd = CallbackData("show_menu", "level", "category", "subcategory", "item_id")
@@ -23,11 +23,15 @@ async def categories_keyboard():
     markup = InlineKeyboardMarkup()
 
     # Забираем список товаров из базы данных с РАЗНЫМИ категориями и проходим по нему
-    categories = await get_categories_code()
+    categories = await get_categories()
     for category in categories:
+        # Чекаем в базе сколько товаров существует под данной категорией
+        number_of_items = await count_items(category.category_code)
+
         # Сформируем текст, который будет на кнопке
-        button_text = f"0 ЛВЛ {category.category_code}"
-        # button_text = f"{category.category_name} ({number_of_items} шт)"
+
+        button_text = f"{category.category_name} ({number_of_items} шт)"
+
 
         # Сформируем колбек дату, которая будет на кнопке. Следующий уровень - текущий + 1, и перечисляем категории
         callback_data = make_callback_data(level=CURRENT_LEVEL + 1, category=category.category_code)
@@ -54,7 +58,7 @@ async def subcategories_keyboard(category):
         number_of_items = await count_items(category_code=category, subcategory_code=subcategory.subcategory_code)
 
         # Сформируем текст, который будет на кнопке
-        button_text = f"1_лвл {subcategory.subcategory_name} ({number_of_items} шт)"
+        button_text = f"{subcategory.subcategory_name} ({number_of_items} шт)"
 
         # Сформируем колбек дату, которая будет на кнопке
         callback_data = make_callback_data(level=CURRENT_LEVEL + 1,

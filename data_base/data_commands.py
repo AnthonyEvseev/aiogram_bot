@@ -13,13 +13,13 @@ async def add_item(**kwargs):
 
 
 # Функция для вывода товаров с РАЗНЫМИ категориями
-async def get_categories_code() -> List[Item]:
-    return await Item.query.distinct(Item.category_code).gino.all()
+async def get_categories() -> List[Item]:
+    return await Item.query.distinct(Item.category_name).gino.all()
 
 
 # Функция для вывода товаров с РАЗНЫМИ подкатегориями в выбранной категории
 async def get_subcategories(category) -> List[Item]:
-    return await Item.query.distinct(Item.category_code).where(Item.category_code == category).gino.all()
+    return await Item.query.distinct(Item.subcategory_name).where(Item.category_code == category).gino.all()
 
 
 # Функция для подсчета товаров с выбранными категориями и подкатегориями

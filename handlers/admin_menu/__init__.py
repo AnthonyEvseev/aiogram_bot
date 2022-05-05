@@ -1,2 +1,2 @@
-from . import Admin_panel
+from . import admin_panel
 from . import callback
