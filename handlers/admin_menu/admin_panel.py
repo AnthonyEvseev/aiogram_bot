@@ -94,5 +94,3 @@ async def append_price(message: types.Message, state: FSMContext):
     item: data_base.Item = data.get('item')
     await item.create()
     await state.reset_state()
-
-# @dp.message_handler(user_id=ADMINS)
