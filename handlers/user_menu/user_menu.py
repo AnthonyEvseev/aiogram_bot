@@ -21,16 +21,20 @@ async def bot_start(message: types.Message):
     text = f"Привет, {message.from_user.full_name}!"
     if message.from_user.id == int(ADMINS):
         text += ('\n'
-                 'Чтобы добавить войти в режим админа введи /mod')
+                 'Чтобы добавить войти в режим админа введи /admin_mod')
     await message.answer(text, reply_markup=mane_menu)
 
 
 @dp.message_handler(text='🍴 Menu')
 async def show_items(message: types.Message):
     await list_categories(message)
+    if message.from_user.id == int(ADMINS):
+        text = ('\n'
+                 'Чтобы добавить войти в режим админа введи /admin_mod')
+        await message.answer(text)
 
 
-@dp.message_handler(commands="mod")
+@dp.message_handler(commands="admin_mod")
 async def make_changes_command(message: types.Message):
     await message.delete()
     if message.from_user.id == int(ADMINS):
