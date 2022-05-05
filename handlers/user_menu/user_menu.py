@@ -2,7 +2,7 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery, PreCheckoutQuery, Message
 from time import sleep
-from data_base.data_commands import get_item
+from data_base.data_commands import get_item, get_items
 from keyboards.keyboards_admin import mane_admin
 from configs.config import ADMINS, PAYMENTS_PROVIDER_TOKEN
 from loader import dp, bot
@@ -83,25 +83,22 @@ async def show_item(callback: CallbackQuery, category, subcategory, item_id):
 
 ####################################
 
-# @dp.message_handler(text='🍴 Menu')
-# async def show_items(message: types.Message):
-#     all_item = await db.show_items()
-#     text = ('{name}\n\n'
-#             '{description}\n\n'
-#             'Цена: {price}₽\n')
-#     for item in all_item:
-#         markup = types.InlineKeyboardMarkup()
-#         markup.add(
-#             types.InlineKeyboardButton('Купить', callback_data=buy_item.new(item_id=item.id))
-#         )
-#
-#         await message.answer_photo(
-#             photo=item.photo,
-#             caption=text.format(name=item.name,
-#                                 description=item.description,
-#                                 price=item.price).title(),
-#             reply_markup=markup
-#         )
+# @dp.message_handler(menu_cd.filter())
+async def test_lel(callback: CallbackQuery, category, subcategory, **kwargs):
+    await callback.message.answer('поймал')
+    items = await get_items(category, subcategory)
+    for item in items:
+        button_text = (f'{item.name}\n\n'
+                       f'{item.description}\n\n'
+                       f'Цена: {item.price}₽\n')
+
+        markup = types.InlineKeyboardMarkup()
+        markup.add(
+            types.InlineKeyboardButton('Купить', callback_data=buy_item.new(item_id=item.id))
+        )
+
+        await callback.message.answer_photo(button_text, reply_markup=markup)
+
 ################################
 
 
@@ -113,7 +110,7 @@ async def buying_item(callback: CallbackQuery, callback_data: dict, state: FSMCo
     if not item:
         await callback.message.answer("Такого товара не существует")
         return
-    text = ('Введите колличество товара или нажмите /cansel')
+    text = ('Введите количество товара или нажмите /cansel')
 
     await callback.message.answer(text)
     await Purchase.enterquantity.set()
@@ -253,7 +250,8 @@ async def navigate(call: CallbackQuery, callback_data: dict):
     # Прописываем "уровни" в которых будут отправляться новые кнопки пользователю
     levels = {
         "0": list_categories,  # Отдаем категории
-        "1": list_subcategories,  # Отдаем подкатегории
+        "1": test_lel,  # Отдаем подкатегории
+        # "1": list_subcategories,  # Отдаем подкатегории
         "2": list_items,  # Отдаем товары
         "3": show_item  # Предлагаем купить товар
     }
