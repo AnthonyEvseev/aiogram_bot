@@ -18,6 +18,8 @@ I worked with this database through sql-queries.
 Next I became interested in working with the PostgreSQL database. 
 With this database I worked through OPM.
 
+All important data are encrypted in the environment variable.
+
 At the moment, the development of the bot suspended, because I understood the basic principles of working with bots in the python language. 
 
 Now I'm interested in gaining new knowledge, so I decided to move on
@@ -40,6 +42,8 @@ RU
 
 Далее меня заинтересовала работа с базой данных PostgreSQL.
 С этой базой я работал через OPM.
+
+Все важные данные зашифрованы в переменной окружения.
 
 На данный момент разработка бота приостановлена, так как я понял основные принципы работы с ботами на языке python.
 
