@@ -1,7 +1,6 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery, PreCheckoutQuery, Message
-from time import sleep
 from data_base.data_commands import get_item, get_items
 from keyboards.keyboards_admin import mane_admin
 from configs.config import ADMINS, PAYMENTS_PROVIDER_TOKEN
@@ -79,27 +78,6 @@ async def show_item(callback: CallbackQuery, category, subcategory, item_id):
     item = await get_item(item_id)
     text = f"Купи {item.name}"
     await callback.message.edit_text(text=text, reply_markup=markup)
-
-
-####################################
-
-# @dp.message_handler(menu_cd.filter())
-async def test_lel(callback: CallbackQuery, category, subcategory, **kwargs):
-    await callback.message.answer('поймал')
-    items = await get_items(category, subcategory)
-    for item in items:
-        button_text = (f'{item.name}\n\n'
-                       f'{item.description}\n\n'
-                       f'Цена: {item.price}₽\n')
-
-        markup = types.InlineKeyboardMarkup()
-        markup.add(
-            types.InlineKeyboardButton('Купить', callback_data=buy_item.new(item_id=item.id))
-        )
-
-        await callback.message.answer_photo(button_text, reply_markup=markup)
-
-################################
 
 
 @dp.callback_query_handler(buy_item.filter())
@@ -250,7 +228,6 @@ async def navigate(call: CallbackQuery, callback_data: dict):
     # Прописываем "уровни" в которых будут отправляться новые кнопки пользователю
     levels = {
         "0": list_categories,  # Отдаем категории
-        # "1": test_lel,  # Отдаем подкатегории
         "1": list_subcategories,  # Отдаем подкатегории
         "2": list_items,  # Отдаем товары
         "3": show_item  # Предлагаем купить товар
