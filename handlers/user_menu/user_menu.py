@@ -1,7 +1,7 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery, PreCheckoutQuery, Message
-from data_base.data_commands import get_item, get_items
+from data_base.data_commands import get_item
 from keyboards.keyboards_admin import mane_admin
 from configs.config import ADMINS, PAYMENTS_PROVIDER_TOKEN
 from loader import dp, bot
